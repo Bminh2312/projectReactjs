@@ -13,6 +13,7 @@ import { Avatar, Button, Container } from '@mui/material';
 import AdbIcon from '@mui/icons-material/Adb';
 import Tooltip from '@mui/material/Tooltip'
 import SearchIcon from '@mui/icons-material/Search';
+import Paper from '@mui/material/Paper';
 
 
 
@@ -56,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Home', 'Movie', 'TV Show', 'Pricing', 'Blog', 'Contact'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function Header() {
@@ -80,8 +81,13 @@ export default function Header() {
     };
 
     return (
-        <AppBar position="static">
-            <Container maxWidth="xl">
+        <AppBar position="relative" sx={{ backgroundColor: "black", }}>
+            <img
+                src="https://game8.vn/media/202111/images/gundam-live-action%20(1).jpg"
+                alt="Gundam Live Action"
+                style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
+            />
+            <Container maxWidth="xl" style={{ position: 'absolute' }}>
                 <Toolbar disableGutters>
                     <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
@@ -99,9 +105,9 @@ export default function Header() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        Sunrise
                     </Typography>
-                        
+
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -113,7 +119,7 @@ export default function Header() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        
+
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -139,7 +145,18 @@ export default function Header() {
                             ))}
                         </Menu>
                     </Box>
-                    
+
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: "30%" }}>
+                        {pages.map((page) => (
+                            <Button
+                                key={page}
+                                onClick={handleCloseNavMenu}
+                                sx={{ margin: 1, color: 'white', display: 'block', mt: 2 }}
+                            >
+                                {page}
+                            </Button>
+                        ))}
+                    </Box>
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -149,35 +166,6 @@ export default function Header() {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    {/* <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href="#app-bar-with-responsive-menu"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LOGO
-                    </Typography> */}
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page}
-                            </Button>
-                        ))}
-                    </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
@@ -209,6 +197,13 @@ export default function Header() {
                         </Menu>
                     </Box>
                 </Toolbar>
+                <Paper elevation={0} square sx={{ color: 'white', position: 'absolute', width: '30%', background: 'none', top: '200%', left: '10%', fontFamily: "Poppins" }}>
+                    <h6 style={{ color: '#e4d804', fontSize: '170%' }}>Movflx</h6>
+                    <h2 style={{ fontSize: '220%', marginBottom: '30px' }}>Unlimited <span style={{ color: '#e4d804', fontSize: '220%' }}>Movie</span>, TVs Shows, & More.</h2>
+                    <div><span style={{ backgroundColor: '#fff', color: '#21232b', textTransform: 'uppercase', fontSize: '11px', padding: '7px 11px', fontWeight: '700' }}>Pg 18</span>
+                        <span style={{ border: "2px solid #fff", color: '#fff', background: 'transparent', marginLeft: '9px', textTransform: 'uppercase', fontSize: '11px', padding: '5px 10px', fontWeight: '700' }}>hd</span>
+                    </div>
+                </Paper>
             </Container>
         </AppBar>
     );
