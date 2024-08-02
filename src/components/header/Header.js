@@ -25,8 +25,7 @@ const Search = styled('div')(({ theme }) => ({
         backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
-    
-
+    marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(3),
@@ -61,9 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const pages = ['Home', 'Movie', 'TV Show', 'Pricing', 'Blog', 'Contact'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export default function Header(props) {
-
-    const { flag, setFlag } = props
+export default function Header() {
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -83,8 +80,6 @@ export default function Header(props) {
         setAnchorElUser(null);
     };
 
-
-
     return (
         <AppBar position="relative" sx={{ backgroundColor: "black", }}>
             <img
@@ -92,8 +87,8 @@ export default function Header(props) {
                 alt="Gundam Live Action"
                 style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
             />
-            <Container maxWidth="xxl" style={{ position: 'absolute', backgroundColor:'transparent !important' }}>
-                <Toolbar disableGutters >
+            <Container maxWidth="xxl" style={{ position: 'absolute' }}>
+                <Toolbar disableGutters>
                     <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
@@ -101,7 +96,7 @@ export default function Header(props) {
                         component="a"
                         href="#app-bar-with-responsive-menu"
                         sx={{
-                            mr: 5,
+                            mr: 2,
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
@@ -151,31 +146,26 @@ export default function Header(props) {
                         </Menu>
                     </Box>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: "40%" }}>
-                        {pages.map((page, index) => (
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: "40%", '&:hover':{color: '#e4d804'} }}>
+                        {pages.map((page) => (
                             <Button
-                                key={index}
+                                key={page}
                                 onClick={handleCloseNavMenu}
-                                sx={{
-                                    margin: 1, color: 'white', display: 'block', mt: 2, '&:hover': {
-                                        color: '#e4d804 !important'
-                                    }
-                                }}
+                                sx={{ margin: 1, color: 'white', display: 'block', mt: 2 }}
                             >
-                                <Typography >{page}</Typography>
+                                {page}
                             </Button>
                         ))}
-                    </Box>            
-                        <Search >
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </Search>
-
+                    </Box>
+                    <Search>
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                            placeholder="Search…"
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
+                    </Search>
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
@@ -200,32 +190,20 @@ export default function Header(props) {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}
-                                    sx={{
-                                        '&:hover': {
-                                            color: '#e4d804 !important'
-                                        }
-                                    }}
-                                >
+                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
                 </Toolbar>
-                {
-                    flag ? <Typography>
-                        <Paper elevation={0} square sx={{ color: 'white', position: 'absolute',  width: '30%', backgroundColor: 'transparent !important', top: '500%', left: '10%', fontFamily: "Poppins" }}>
-                            <h6 style={{ color: '#e4d804', fontSize: '170%' }}>Movflx</h6>
-                            <h2 style={{ fontSize: '220%', marginBottom: '30px' }}>Unlimited <span style={{ color: '#e4d804', fontSize: '220%' }}>Movie</span>, TVs Shows, & More.</h2>
-                            <div><span style={{ backgroundColor: '#fff', color: '#21232b', textTransform: 'uppercase', fontSize: '11px', padding: '7px 11px', fontWeight: '700' }}>Pg 18</span>
-                                <span style={{ border: "2px solid #fff", color: '#fff', background: 'transparent', marginLeft: '9px', textTransform: 'uppercase', fontSize: '11px', padding: '5px 10px', fontWeight: '700' }}>hd</span>
-                            </div>
-                        </Paper>
-                    </Typography> : <></>
-                }
-
-
+                <Paper elevation={0} square sx={{ color: 'white', position: 'absolute', width: '30%', background: 'none', top: '200%', left: '10%', fontFamily: "Poppins" }}>
+                    <h6 style={{ color: '#e4d804', fontSize: '170%' }}>Movflx</h6>
+                    <h2 style={{ fontSize: '220%', marginBottom: '30px' }}>Unlimited <span style={{ color: '#e4d804', fontSize: '220%' }}>Movie</span>, TVs Shows, & More.</h2>
+                    <div><span style={{ backgroundColor: '#fff', color: '#21232b', textTransform: 'uppercase', fontSize: '11px', padding: '7px 11px', fontWeight: '700' }}>Pg 18</span>
+                        <span style={{ border: "2px solid #fff", color: '#fff', background: 'transparent', marginLeft: '9px', textTransform: 'uppercase', fontSize: '11px', padding: '5px 10px', fontWeight: '700' }}>hd</span>
+                    </div>
+                </Paper>
             </Container>
         </AppBar>
     );

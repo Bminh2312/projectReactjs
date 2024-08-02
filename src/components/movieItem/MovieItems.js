@@ -30,8 +30,8 @@ export default function MovieItems(props) {
                             </Typography>
                             <Typography variant="h6" color="text.secondary" sx={{color: '#ffc048'}}>
                                 <Box sx={{ width: "100%", display: 'flex' }}>
-                                    <p style={{ width: '30%', fontSize: "90%", display: 'inline-block', marginRight: '20px' }}><i class="fa-regular fa-thumbs-up"></i>{item.popularity}</p>
-
+                                    <p style={{ width: '40%', fontSize: "90%", display: 'inline-block', marginRight: '20px' }}><i class="fa-regular fa-thumbs-up" style={{margin:'5px'}}></i>{item.popularity}</p>
+                                    
                                 </Box>
                             
                             </Typography>
