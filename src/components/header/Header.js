@@ -11,11 +11,22 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Avatar, Button, Container } from '@mui/material';
 import AdbIcon from '@mui/icons-material/Adb';
-import Tooltip from '@mui/material/Tooltip'
+import Tooltip from '@mui/material/Tooltip';
 import SearchIcon from '@mui/icons-material/Search';
 import Paper from '@mui/material/Paper';
 
 
+const StyledButton = styled(Button)(({ theme, active }) => ({
+    margin: theme.spacing(1),
+    color: 'white',
+    display: 'block',
+    marginTop: theme.spacing(2),
+    '&:hover': {
+        color: '#e4d804',
+    },
+    backgroundColor: active ? '#e4d804' : 'transparent',
+    color: active ? '#000' : 'white',
+}));
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -61,6 +72,11 @@ const pages = ['Home', 'Movie', 'TV Show', 'Pricing', 'Blog', 'Contact'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function Header() {
+    const [activePage, setActivePage] = React.useState('');
+
+    const handleActive = (page) => {
+        setActivePage(page);
+    };
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -81,7 +97,7 @@ export default function Header() {
     };
 
     return (
-        <AppBar position="relative" sx={{ backgroundColor: "black", }}>
+        <AppBar position="relative" sx={{ backgroundColor: "black" }}>
             <img
                 src="https://game8.vn/media/202111/images/gundam-live-action%20(1).jpg"
                 alt="Gundam Live Action"
@@ -139,24 +155,25 @@ export default function Header() {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <MenuItem key={page} onClick={() => handleActive(page)}>
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: "40%", '&:hover':{color: '#e4d804'} }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: "40%" }}>
                         {pages.map((page) => (
-                            <Button
+                            <StyledButton
                                 key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ margin: 1, color: 'white', display: 'block', mt: 2 }}
+                                onClick={() => handleActive(page)}
+                                active={activePage === page}
                             >
                                 {page}
-                            </Button>
+                            </StyledButton>
                         ))}
                     </Box>
+
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -197,7 +214,7 @@ export default function Header() {
                         </Menu>
                     </Box>
                 </Toolbar>
-                <Paper elevation={0} square sx={{ color: 'white', position: 'absolute', width: '30%', background: 'none', top: '200%', left: '10%', fontFamily: "Poppins" }}>
+                <Paper elevation={0} square sx={{ color: 'white', position: 'absolute', width: '30%', background: 'none', top: '500%', left: '10%', fontFamily: "Poppins" }}>
                     <h6 style={{ color: '#e4d804', fontSize: '170%' }}>Movflx</h6>
                     <h2 style={{ fontSize: '220%', marginBottom: '30px' }}>Unlimited <span style={{ color: '#e4d804', fontSize: '220%' }}>Movie</span>, TVs Shows, & More.</h2>
                     <div><span style={{ backgroundColor: '#fff', color: '#21232b', textTransform: 'uppercase', fontSize: '11px', padding: '7px 11px', fontWeight: '700' }}>Pg 18</span>

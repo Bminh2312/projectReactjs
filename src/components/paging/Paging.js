@@ -33,7 +33,7 @@ export default function Paging(props) {
   });
   return (
     <ThemeProvider theme={theme}>
-      <Stack spacing={2} sx={{ color: 'white', margin: '0 auto' }}>
+      <Stack spacing={2} sx={{ color: 'white'}}>
         <Pagination count={total} page={page} onChange={handle_changePage} />
       </Stack>
     </ThemeProvider>

@@ -4,8 +4,8 @@ import axios from 'axios';
 const initialState = {
     items: {},
     status: 'start',
-    path:'https://image.tmdb.org/t/p/w500',
-    total:0,
+    path: 'https://image.tmdb.org/t/p/w500',
+    total: 0,
     error: null,
 }
 
@@ -14,7 +14,7 @@ const url = 'https://api.themoviedb.org/3/movie'
 
 
 export const fetchMoviesUpComing = createAsyncThunk('movies/fetchMoviesUpComing', async (page) => {
-    const urlUpComing = url +`/upcoming?language=vi-VN&page=${page}`
+    const urlUpComing = url + `/upcoming?language=vi-VN&page=${page}`
     try {
         const response = await axios.get(urlUpComing, {
             headers: {
@@ -43,17 +43,17 @@ const movieSlice = createSlice({
             .addCase(fetchMoviesUpComing.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(fetchMoviesUpComing.fulfilled, (state,action)=>{
+            .addCase(fetchMoviesUpComing.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.items = action.payload
                 state.total = action.payload.total_pages
                 state.status = 'start'
             })
-            .addCase(fetchMoviesUpComing.rejected, (state,action)=>{
+            .addCase(fetchMoviesUpComing.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.payload.status_message
             })
-           
+
     }
 })
 
