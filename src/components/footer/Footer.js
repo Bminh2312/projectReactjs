@@ -48,7 +48,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const StyledLink = styled(MuiLink)(({ theme }) => ({
+const StyledLink = styled(MuiLink)(() => ({
     color: 'inherit',
     whiteSpace: 'nowrap',
     textDecoration: 'none',
@@ -133,7 +133,7 @@ export default function Footer() {
             <Box sx={{ width: '100%', color: 'white', py: 2, mt: 2 }}>
                 <Container maxWidth="xxl">
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', whiteSpace: 'nowrap' }}>
-                        <Box sx={{ display: 'flex', gap: 3, color: 'white' }}>
+                        <Box sx={{ display: 'flex', gap: 1, color: 'white' }}>
                             <StyledLink component={RouterLink} to="/movieDetailPage">
                                 FAQ
                             </StyledLink>
@@ -141,7 +141,7 @@ export default function Footer() {
                             <StyledLink underline="none" >Terms of Use</StyledLink>
                             <StyledLink underline="none" >Privacy</StyledLink>
                         </Box>
-                        <Box sx={{ display: 'flex', gap: 2 }}>
+                        <Box sx={{ display: 'flex', gap: 0 }}>
                             <StyledLink ><Facebook /></StyledLink>
                             <StyledLink ><Twitter /></StyledLink>
                             <StyledLink ><Pinterest /></StyledLink>

@@ -2,10 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
 
 const initialState = {
-    items: {},
+    item: {},
     status: 'start',
     path: 'https://image.tmdb.org/t/p/w500',
-    total: 0,
     error: null,
 }
 
@@ -13,10 +12,12 @@ const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWVmNGI2YjNiNGZlMjRhZDk0OTkyYWQz
 const url = 'https://api.themoviedb.org/3/movie'
 
 
-export const fetchMoviesUpComing = createAsyncThunk('movies/fetchMoviesUpComing', async (page) => {
-    const urlUpComing = url + `/upcoming?language=vi-VN&page=${page}`
+
+
+export const fetchVideoMovie = createAsyncThunk('movies/fetchVideoMovie', async (id) => {
+    const urlDetail = url + `/${id}/videos?language=en-US`
     try {
-        const response = await axios.get(urlUpComing, {
+        const response = await axios.get(urlDetail, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -34,22 +35,21 @@ export const fetchMoviesUpComing = createAsyncThunk('movies/fetchMoviesUpComing'
 //     return respone.data;
 // })
 
-const movieSlice = createSlice({
-    name: 'movies',
+const videoMovieSlice = createSlice({
+    name: 'videoMovies',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchMoviesUpComing.pending, (state) => {
+            .addCase(fetchVideoMovie.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(fetchMoviesUpComing.fulfilled, (state, action) => {
+            .addCase(fetchVideoMovie.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                state.items = action.payload
-                state.total = action.payload.total_pages
+                state.item = action.payload
                 state.status = 'start'
             })
-            .addCase(fetchMoviesUpComing.rejected, (state, action) => {
+            .addCase(fetchVideoMovie.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.payload.status_message
             })
@@ -57,4 +57,4 @@ const movieSlice = createSlice({
     }
 })
 
-export default movieSlice.reducer
+export default videoMovieSlice.reducer

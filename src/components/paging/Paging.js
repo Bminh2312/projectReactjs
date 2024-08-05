@@ -5,7 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export default function Paging(props) {
   const { total, setPage, page } = props
-  const handle_changePage = (e, newPage)=>{
+  const handle_changePage = (e,newPage)=>{
     setPage(newPage)
     console.log("Selected Page:", newPage);
   }
