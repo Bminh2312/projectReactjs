@@ -9,7 +9,7 @@ import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Avatar, Button, Container,Link as MuiLink } from '@mui/material';
+import { Avatar, Button, Container, Link as MuiLink } from '@mui/material';
 import AdbIcon from '@mui/icons-material/Adb';
 import Tooltip from '@mui/material/Tooltip';
 import SearchIcon from '@mui/icons-material/Search';
@@ -69,12 +69,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+const StyledLink = styled(MuiLink)(() => ({
+    color: 'inherit',
+    whiteSpace: 'nowrap',
+    textDecoration: 'none',
+    '&:hover': {
+        textDecoration: 'underline',
+    },
+}));
+
 
 
 const pages = ['Home', 'Movie', 'TV Show', 'Pricing', 'Blog', 'Contact'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function Header(props) {
+    const [scroll, setScroll] = React.useState(false);
+    const [info, setInfo] = React.useState([])
     const setting = {
         dots: false,
         infinite: true,
@@ -90,7 +101,11 @@ export default function Header(props) {
     const [activePage, setActivePage] = React.useState('');
     const { flag } = props
     const handleActive = (page) => {
-        setActivePage(page);
+        if (page === 'Home') {
+            setActivePage('/');
+        } else {
+            setActivePage(`/${page.toLowerCase().replace(' ', '')}`);
+        }
     };
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -114,62 +129,78 @@ export default function Header(props) {
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
         return (
-          <div
-            className={className}
-            style={{ ...style, display: "none", background: "red" }}
-            onClick={onClick}
-          />
+            <div
+                className={className}
+                style={{ ...style, display: "none", background: "red" }}
+                onClick={onClick}
+            />
         );
-      }
-      
-      function SamplePrevArrow(props) {
+    }
+
+    function SamplePrevArrow(props) {
         const { className, style, onClick } = props;
         return (
-          <div
-            className={className}
-            style={{ ...style, display: "none", background: "green" }}
-            onClick={onClick}
-          />
+            <div
+                className={className}
+                style={{ ...style, display: "none", background: "green" }}
+                onClick={onClick}
+            />
         );
-      }
+    }
+
+    React.useEffect(() => {
+
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setScroll(true);
+            } else {
+                setScroll(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [])
 
     return (
-        <AppBar position="relative" sx={{ backgroundColor: "black",width:'100%' }}>
-            {flag ? <Box sx={{ height: "8vh" }}>
+        <AppBar position="relative" sx={{ backgroundColor: "black", width: '100%' }}>
+            {flag ? <Box sx={{ height: '7vh' }}>
 
             </Box> :
-           
-                <div className="slider-container">
-                <Slider {...setting}>
-                    <div>
-                        <img
-                            src="https://game8.vn/media/202111/images/gundam-live-action%20(1).jpg"
-                            alt="Gundam Live Action"
-                            style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
-                        />
-                    </div>
-                    <div>
-                    <img
-                            src="https://wallpaperaccess.com/full/2030181.jpg"
-                            alt="Gundam Live Action"
-                            style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
-                        />
-                    </div>
-                    <div>
-                    <img
-                            src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/anh-iron-man-chien-dau-3-17-13-52-52.jpg"
-                            alt="Gundam Live Action"
-                            style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
-                        />
-                    </div>
-                </Slider>
-            </div>
-           
-             }
 
-            <Container maxWidth="xxl" sx={{ position: 'absolute' }}>
-                <Toolbar disableGutters >
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                <div className="slider-container">
+                    <Slider {...setting}>
+                        <div>
+                            <img
+                                src="https://game8.vn/media/202111/images/gundam-live-action%20(1).jpg"
+                                alt="Gundam Live Action"
+                                style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
+                            />
+                        </div>
+                        <div>
+                            <img
+                                src="https://wallpaperaccess.com/full/2030181.jpg"
+                                alt="Gundam Live Action"
+                                style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
+                            />
+                        </div>
+                        <div>
+                            <img
+                                src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/anh-iron-man-chien-dau-3-17-13-52-52.jpg"
+                                alt="Gundam Live Action"
+                                style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
+                            />
+                        </div>
+                    </Slider>
+                </div>
+
+            }
+
+            <Container maxWidth="xxxl" >
+                <Toolbar sx={{ position: 'fixed', top: 0, left: '-0.01%', width: '100%', zIndex: 1100, backgroundColor: scroll ? 'black' : 'transparent', width: '100%' }}  >
+                    <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, justifyContent: 'start', alignItems: 'center', fontSize:'300%' }}>
+                        <i class="fa-solid fa-sun" ></i>
+                    </Box>
                     <Typography
                         variant="h6"
                         noWrap
@@ -188,7 +219,7 @@ export default function Header(props) {
                         Sunrise
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: 'start', alignItems: 'center' }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -226,13 +257,14 @@ export default function Header(props) {
                         </Menu>
                     </Box>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, marginLeft: "40%" }}>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'end', alignItems: 'center' }}>
                         {pages.map((page) => (
                             <StyledButton
                                 component={RouterLink}
                                 key={page}
+                                to={page === 'Home' ? '/' : `/${page.toLowerCase().replace(' ', '')}`}
                                 onClick={() => handleActive(page)}
-                                active={activePage === page}
+                                active={activePage === (page === 'Home' ? '/' : `/${page.toLowerCase().replace(' ', '')}`)}
                             >
                                 {page}
                             </StyledButton>
@@ -248,7 +280,7 @@ export default function Header(props) {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                        
+
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -279,7 +311,7 @@ export default function Header(props) {
                         </Menu>
                     </Box>
                 </Toolbar>
-                {flag ? <></> : <Paper elevation={0} square sx={{ color: 'white', position: 'absolute', width: '30%', background: 'none', top: '500%', left: '10%', fontFamily: "Poppins" }}>
+                {flag ? <></> : <Paper elevation={0} square sx={{ color: 'white', position: 'absolute', width: '30%', background: 'none', top: '40%', left: '10%', fontFamily: "Poppins" }}>
                     <h6 style={{ color: '#e4d804', fontSize: '170%' }}>Movflx</h6>
                     <h2 style={{ fontSize: '220%', marginBottom: '30px' }}>Unlimited <span style={{ color: '#e4d804', fontSize: '220%' }}>Movie</span>, TVs Shows, & More.</h2>
                     <div><span style={{ backgroundColor: '#fff', color: '#21232b', textTransform: 'uppercase', fontSize: '11px', padding: '7px 11px', fontWeight: '700' }}>Pg 18</span>

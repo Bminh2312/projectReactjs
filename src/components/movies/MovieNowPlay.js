@@ -46,7 +46,7 @@ export default function MovieNowPlay() {
                     sx={{ color: "#fff" }}
                 >Now play Movies</Typography>
             </Box>
-            <Grid sx={{ marginTop: "10px",textAlign:'center' , justifyContent: 'center', alignItems: 'center' }} container rowSpacing={2} >
+            <Grid container sx={{ marginTop: "10px",textAlign:'center' , justifyContent: 'center', alignItems: 'center' }}  rowSpacing={2} >
                 {items && items.results && items.results.slice(0, rowsToShow * 4).map((item, index) => (
                     <MovieItems item={item} key={index} path={path} />
                 ))}

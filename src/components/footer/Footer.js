@@ -83,7 +83,9 @@ export default function Footer() {
         }}>
             <Grid container spacing={2} alignItems="center" justifyContent="center">
                 <Grid item xl={2} lg={3} md={4} sm={12} xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <AdbIcon sx={{ display: 'flex', marginBottom: 1 }} />
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, justifyContent: 'start', alignItems: 'center', fontSize:'300%' }}>
+                        <i class="fa-solid fa-sun" ></i>
+                    </Box>
                     <Typography
                         variant="h6"
                         noWrap
@@ -101,7 +103,7 @@ export default function Footer() {
                         Sunrise
                     </Typography>
                 </Grid>
-                <Grid item xl={8} lg={6} md={4} sm={12} xs={12} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center' }}>
+                <Grid item xl={8} lg={6} md={4} sm={12} xs={12} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'end', alignItems: 'center' }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
                         {pages.map((page) => (
                             <StyledButton
@@ -132,22 +134,22 @@ export default function Footer() {
             </Box>
             <Box sx={{ width: '100%', color: 'white', py: 2, mt: 2 }}>
                 <Container maxWidth="xxl">
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', whiteSpace: 'nowrap' }}>
-                        <Box sx={{ display: 'flex', gap: 1, color: 'white' }}>
+                    <Grid container sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', whiteSpace: 'nowrap' }}>
+                        <Grid item xl={2} lg={3} md={4} sm={12} xs={12} sx={{ display: 'flex', gap: 1, color: 'white' }}>
                             <StyledLink component={RouterLink} to="/movieDetailPage">
                                 FAQ
                             </StyledLink>
                             <StyledLink underline="none">Help Center</StyledLink>
                             <StyledLink underline="none" >Terms of Use</StyledLink>
                             <StyledLink underline="none" >Privacy</StyledLink>
-                        </Box>
-                        <Box sx={{ display: 'flex', gap: 0 }}>
+                        </Grid>
+                        <Grid item xl={2} lg={3} md={4} sm={12} xs={12} sx={{ display: 'flex', gap: 0 }}>
                             <StyledLink ><Facebook /></StyledLink>
                             <StyledLink ><Twitter /></StyledLink>
                             <StyledLink ><Pinterest /></StyledLink>
                             <StyledLink ><LinkedIn /></StyledLink>
-                        </Box>
-                    </Box>
+                        </Grid>
+                    </Grid>
                 </Container>
             </Box>
             <Box sx={{ width: '100%', color: 'white', py: 2, mt: 2 }}>
