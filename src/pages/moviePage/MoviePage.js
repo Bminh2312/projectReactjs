@@ -8,7 +8,7 @@ import MovieUpComing from "../../components/movies/MovieUpComing";
 
 
 
-export default function HomePage() {
+export default function MoviePage() {
   const [flag, setFlag] = useState(false)
   return (
     <Container maxWidth='xxl' sx={{ background: '#1e272e', paddingLeft: '0 !important', paddingRight: '0 !important' }}>

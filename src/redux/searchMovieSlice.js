@@ -2,22 +2,23 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
 
 const initialState = {
-    item: {},
+    items: {},
     status: 'start',
     path: 'https://image.tmdb.org/t/p/w500',
+    total: 0,
     error: null,
 }
 
 const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWVmNGI2YjNiNGZlMjRhZDk0OTkyYWQzNDhiMTA1NiIsIm5iZiI6MTcyMjU2NjMyNS4yMzc5MTIsInN1YiI6IjY2YWIyZGNmYzFhZmMwZmE4N2MwMDZjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.R75_Aiz4ZtY81MT49o0RZ8WOpY4Ous1f3rBWbvulRB0"
-const url = 'https://api.themoviedb.org/3/movie'
+const url = 'https://api.themoviedb.org/3/search/movie'
 
 
 
 
-export const fetchDetailMovie = createAsyncThunk('movies/fetchDetailMovie', async (id) => {
-    const urlDetail = url + `/${id}?language=en-US`
+export const fetchSearchMovie = createAsyncThunk('movies/fetchSearchMovie', async ({search,page}) => {
+    const urlSearch = url + `?query=${search}&include_adult=false&language=en-USpage=${page}`
     try {
-        const response = await axios.get(urlDetail, {
+        const response = await axios.get(urlSearch, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -30,28 +31,32 @@ export const fetchDetailMovie = createAsyncThunk('movies/fetchDetailMovie', asyn
     }
 });
 
+// export const pageProducts = createAsyncThunk('products/pageProducts', async ({page,limit}) => {
+//     const respone = await axios.get(url+'/'+'?page='+page+'&'+'limit='+limit);
+//     return respone.data;
+// })
 
-
-const detailMovieSlice = createSlice({
-    name: 'detailMovies',
+const searchMovieSlice = createSlice({
+    name: 'searchMovie',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchDetailMovie.pending, (state) => {
+            .addCase(fetchSearchMovie.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(fetchDetailMovie.fulfilled, (state, action) => {
+            .addCase(fetchSearchMovie.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                state.item = action.payload
+                state.items = action.payload
+                state.total = action.payload.total_pages
                 state.status = 'start'
             })
-            .addCase(fetchDetailMovie.rejected, (state, action) => {
+            .addCase(fetchSearchMovie.rejected, (state, action) => {
                 state.status = 'failed'
-                state.error = action.payload.status_message
+                state.error = action.payload
             })
 
     }
 })
 
-export default detailMovieSlice.reducer
+export default searchMovieSlice.reducer

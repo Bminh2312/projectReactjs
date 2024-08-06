@@ -29,9 +29,9 @@ export default function Movie() {
     }, [page])
 
     if (status === 'loading') {
-        return <Loading/>
- 
-        
+        return <Loading />
+
+
     }
 
 
@@ -59,7 +59,17 @@ export default function Movie() {
             </Grid>
             {rowsToShow * 4 < (items && items.results && items.results.length) && (
                 <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '20px' }}>
-                    <Button variant="contained" onClick={handleLoadMore}>Load More</Button>
+                    <Button variant="contained" sx={{
+                        backgroundColor: '#e4d804', // Button background color
+                        '&:hover': {
+                            backgroundColor: '#c0b800', // Color on hover (optional)
+                        },
+                        margin: "0 auto",
+
+                        '&:hover': {
+                            color: '#e4d804',
+                        },
+                    }} onClick={handleLoadMore}>Load More</Button>
                 </Box>
             )}
 

@@ -1,7 +1,10 @@
-import HomePage from "./pages/home/HomePage";
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import '../src/app.css';
 import MovieDetailPage from "./pages/movieDetailPage/MovieDetailPage";
+import NotFoundPage from "./pages/notFoundPage/NotFoundPage";
+import MovieSearchPage from './pages/movieSearchPage/MovieSearchPage';
+import MoviePage from './pages/moviePage/MoviePage';
 
 
 
@@ -9,9 +12,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<HomePage/>}/>
-        <Route path='/home' element={<HomePage/>}/>
-        <Route path='/movieDetailPage/:movie_id' element={<MovieDetailPage/>}/>
+        <Route path='/' element={<MoviePage />} />
+        <Route path='/movie' element={<MoviePage />} />
+        <Route path='/movieDetailPage/:movie_id' element={<MovieDetailPage />} />
+        <Route path='/search/:search' element={<MovieSearchPage />} />
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

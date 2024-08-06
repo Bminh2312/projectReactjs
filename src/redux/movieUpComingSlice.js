@@ -29,26 +29,6 @@ export const fetchMoviesUpComing = createAsyncThunk('movies/fetchMoviesUpComing'
     }
 });
 
-export const fetchMoviesNowPlay = createAsyncThunk('movies/fetchMoviesNowPlay', async (page) => {
-    const urlUpComing = url + `/now_playing?language=en-US&page=${page}`
-    try {
-        const response = await axios.get(urlUpComing, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        console.log("Response data:", response.data);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching movies:", error);
-        throw error; // Re-throw the error so it can be caught by the rejected case in extraReducers
-    }
-});
-
-// export const pageProducts = createAsyncThunk('products/pageProducts', async ({page,limit}) => {
-//     const respone = await axios.get(url+'/'+'?page='+page+'&'+'limit='+limit);
-//     return respone.data;
-// })
 
 const movieUpComingSlice = createSlice({
     name: 'upComingMovies',

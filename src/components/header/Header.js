@@ -9,17 +9,19 @@ import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Avatar, Button, Container, Link as MuiLink } from '@mui/material';
-import AdbIcon from '@mui/icons-material/Adb';
+import { Avatar, Button, Container } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 import SearchIcon from '@mui/icons-material/Search';
 import Paper from '@mui/material/Paper';
-import Slider from 'react-slick';
+
 import { Link as RouterLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeUser } from '../../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
+import SliderImg from '../Slider/SliderImg';
 
 const StyledButton = styled(Button)(({ theme, active }) => ({
     margin: theme.spacing(1),
-    color: 'white',
     display: 'block',
     marginTop: theme.spacing(2),
     '&:hover': {
@@ -69,35 +71,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const StyledLink = styled(MuiLink)(() => ({
-    color: 'inherit',
-    whiteSpace: 'nowrap',
-    textDecoration: 'none',
-    '&:hover': {
-        textDecoration: 'underline',
-    },
-}));
 
 
 
-const pages = ['Home', 'Movie', 'TV Show', 'Pricing', 'Blog', 'Contact'];
+const pages = ['Movie', 'TV Show', 'Pricing', 'Blog', 'Contact'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function Header(props) {
+    const navigate = useNavigate()
+    const [search, setSearch] = React.useState('')
     const [scroll, setScroll] = React.useState(false);
-    const [info, setInfo] = React.useState([])
-    const setting = {
-        dots: false,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        speed: 1000,
-        autoplaySpeed: 3000,
-        cssEase: "linear",
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />
-    };
+    const { user } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
     const [activePage, setActivePage] = React.useState('');
     const { flag } = props
     const handleActive = (page) => {
@@ -124,29 +109,19 @@ export default function Header(props) {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+
     };
 
-    function SampleNextArrow(props) {
-        const { className, style, onClick } = props;
-        return (
-            <div
-                className={className}
-                style={{ ...style, display: "none", background: "red" }}
-                onClick={onClick}
-            />
-        );
+    const option = (text) => {
+        if (text.toLowerCase() === 'logout' && text.length > 0) {
+            dispatch(removeUser())
+            setAnchorElUser(null);
+        }
     }
 
-    function SamplePrevArrow(props) {
-        const { className, style, onClick } = props;
-        return (
-            <div
-                className={className}
-                style={{ ...style, display: "none", background: "green" }}
-                onClick={onClick}
-            />
-        );
-    }
+
+
+
 
     React.useEffect(() => {
 
@@ -160,7 +135,7 @@ export default function Header(props) {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [])
+    }, [user])
 
     return (
         <AppBar position="relative" sx={{ backgroundColor: "black", width: '100%' }}>
@@ -168,37 +143,13 @@ export default function Header(props) {
 
             </Box> :
 
-                <div className="slider-container">
-                    <Slider {...setting}>
-                        <div>
-                            <img
-                                src="https://game8.vn/media/202111/images/gundam-live-action%20(1).jpg"
-                                alt="Gundam Live Action"
-                                style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
-                            />
-                        </div>
-                        <div>
-                            <img
-                                src="https://wallpaperaccess.com/full/2030181.jpg"
-                                alt="Gundam Live Action"
-                                style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
-                            />
-                        </div>
-                        <div>
-                            <img
-                                src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/anh-iron-man-chien-dau-3-17-13-52-52.jpg"
-                                alt="Gundam Live Action"
-                                style={{ width: '100%', height: '100vh', opacity: '0.3', objectFit: 'fill' }}
-                            />
-                        </div>
-                    </Slider>
-                </div>
+                <SliderImg />
 
             }
 
             <Container maxWidth="xxxl" >
-                <Toolbar sx={{ position: 'fixed', top: 0, left: '-0.01%', width: '100%', zIndex: 1100, backgroundColor: scroll ? 'black' : 'transparent', width: '100%' }}  >
-                    <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, justifyContent: 'start', alignItems: 'center', fontSize:'300%' }}>
+                <Toolbar sx={{ position: 'fixed', top: 0, left: '-0.01%', width: '100%', zIndex: 1100, backgroundColor: scroll ? 'black' : 'transparent' }}  >
+                    <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, justifyContent: 'start', alignItems: 'center', fontSize: '300%' }}>
                         <i class="fa-solid fa-sun" ></i>
                     </Box>
                     <Typography
@@ -278,13 +229,26 @@ export default function Header(props) {
                         <StyledInputBase
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    navigate(`/search/${search}`)
+                                }
+                            }}
+
                         />
                     </Search>
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                {
+
+                                    <Avatar alt="Remy Sharp" src={user != null ? `${user.photoURL}` : "/static/images/avatar/2.jpg"} />
+
+                                }
+
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -304,7 +268,7 @@ export default function Header(props) {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                <MenuItem key={setting} onClick={() => option(setting)}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
@@ -317,6 +281,13 @@ export default function Header(props) {
                     <div><span style={{ backgroundColor: '#fff', color: '#21232b', textTransform: 'uppercase', fontSize: '11px', padding: '7px 11px', fontWeight: '700' }}>Pg 18</span>
                         <span style={{ border: "2px solid #fff", color: '#fff', background: 'transparent', marginLeft: '9px', textTransform: 'uppercase', fontSize: '11px', padding: '5px 10px', fontWeight: '700' }}>hd</span>
                     </div>
+                    <Button variant="contained" sx={{
+                        mt: 3,
+                        backgroundColor: '#e4d804', // Button background color
+                        '&:hover': {
+                            backgroundColor: '#c0b800', // Color on hover (optional)
+                        }
+                    }}>Watch now</Button>
                 </Paper>}
 
             </Container>

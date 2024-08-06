@@ -1,15 +1,25 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Link as MuiLink, styled, Typography } from '@mui/material'
-import React from 'react'
-import { Link as RouterLink } from 'react-router-dom';
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Modal, Link as MuiLink, styled, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import MovieDetailPage from '../../pages/movieDetailPage/MovieDetailPage';
+import SignInGG from '../signInWithGG/SignInGG';
+import { useSelector } from 'react-redux';
 
 
 const StyledButton = styled(Button)(({ theme }) => ({
     margin: theme.spacing(0.5),
     color: 'white',
-    backgroundColor: '#e4d804',
-    position:'absolute',
-    bottom:'3%'
+    backgroundColor: '#e4d804', // Button background color
+    '&:hover': {
+        backgroundColor: '#c0b800', // Color on hover (optional)
+    },
+    margin: "0 auto",
+    
+    '&:hover': {
+        color: '#e4d804',
+    },
+    position: 'absolute',
+    bottom: '3%'
 
 }));
 
@@ -22,7 +32,26 @@ const StyledLink = styled(MuiLink)(() => ({
     },
 }));
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: "30%",
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
+
 export default function MovieItems(props) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const {user} = useSelector((state)=>state.user)
+    const [active,setActive] = useState([])
+    const navigate = useNavigate();
+    
     const { item, key, path } = props
     const imgSrc = path + '/' + item.backdrop_path
 
@@ -30,42 +59,68 @@ export default function MovieItems(props) {
     const year = date.split('-')[0];
 
     const movieLink = `/movieDetailPage/${item.id}`
+    const handleNavigation = () => {
+        if (user !== undefined && user !== null) {
+            navigate(movieLink);
+            console.log("aaaa"+ user)
+        } else {
+            handleOpen()
+            
+        }
+    };
 
+    // useEffect(()=>{
+    //     setActive(user)
+    // },[])
+    
+   
     return (
         <>
-            <Grid item key={key} xl={3} lg={4} md={6} xs={12} >
-                <StyledLink component={RouterLink} to={movieLink} >
-                    <Card sx={{ maxWidth: 345, background: '#485460', color: 'white', height: "55vh", position:'relative' }}>
-                        <Box sx={{ overflow: 'hidden' }}>
-                            <CardMedia
-                                sx={{ height: 300, '&:hover': { transform: 'scale(1.2)' }, transition: '1s' }}
-                                image={imgSrc}
-                                title="green iguana"
-                            />
+        <Grid item key={key} xl={3} lg={4} md={6} xs={12}>
+            <Card sx={{ maxWidth: 345, background: '#485460', color: 'white', height: "55vh", position: 'relative' }}>
+                <Box sx={{ overflow: 'hidden' }}>
+                    <CardMedia
+                        sx={{ height: 300, '&:hover': { transform: 'scale(1.2)' }, transition: '1s' }}
+                        image={imgSrc}
+                        title={item.title}
+                    />
+                </Box>
+                <CardContent>
+                    <Typography gutterBottom variant="h6" component="div" sx={{ color: '#ffc048', marginBottom: '10px' }}>
+                        <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-evenly', whiteSpace: 'normal' }}>
+                            <p style={{ width: '70%', fontSize: "90%", textAlign: 'start' }}>{item.title}</p>
+                            <p style={{ width: '30%', textAlign: 'end' }}>{year}</p>
                         </Box>
-                        <CardContent>
-                            <Typography gutterBottom variant="h6" component="div" sx={{ color: '#ffc048', marginBottom: '10px' }}>
-                                <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-evenly' ,whiteSpace:'normal'}}>
-                                    <p style={{ width: '70%', fontSize: "90%",textAlign: 'start' }}>{item.title}</p>
-                                    <p style={{ width: '30%', textAlign: 'end' }}>{year}</p>
-                                </Box>
-                            </Typography>
-                            <Typography variant="h6" color="text.secondary" sx={{ color: '#ffc048' }}>
-                                <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-evenly' }}>
-                                    <p style={{ width: '50%', fontSize: "90%" ,textAlign: 'start'}}><i class="fa-regular fa-eye" style={{ margin: '5px' }}></i>{item.popularity}</p>
-                                    <p style={{ width: '50%', fontSize: "90%", textAlign: 'end' }}><i class="fa-regular fa-thumbs-up" style={{ margin: '5px' }}></i>{item.vote_count}</p>
-                                </Box>
-
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                        <StyledButton>Watch movie</StyledButton>
-                        </CardActions>
-                    </Card>
-                </StyledLink>
-
-            </Grid>
-
-        </>
+                    </Typography>
+                    <Typography variant="h6" color="text.secondary" sx={{ color: '#ffc048' }}>
+                        <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-evenly' }}>
+                            <p style={{ width: '50%', fontSize: "90%", textAlign: 'start' }}><i className="fa-regular fa-eye" style={{ margin: '5px' }}></i>{item.popularity}</p>
+                            <p style={{ width: '50%', fontSize: "90%", textAlign: 'end' }}><i className="fa-regular fa-thumbs-up" style={{ margin: '5px' }}></i>{item.vote_count}</p>
+                        </Box>
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <StyledButton onClick={handleNavigation}>Watch movie</StyledButton>
+                </CardActions>
+            </Card>
+        </Grid>
+    
+        <div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography  id="modal-modal-description" sx={{ mt: 2, width:'100%', textAlign:'center' }}>
+                       Login with gmail
+                    </Typography>
+                    <SignInGG  setOpen={setOpen}/>
+                </Box>
+                
+            </Modal>
+        </div>
+    </>
     )
 }
