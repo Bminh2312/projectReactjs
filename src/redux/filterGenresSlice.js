@@ -11,7 +11,7 @@ const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWVmNGI2YjNiNGZlMjRhZDk0OTkyYWQz
 const url = 'https://api.themoviedb.org/3/genre/movie'
 
 
-export const fetchGenres = createAsyncThunk('movies/fetchFilterMovies', async () => {
+export const fetchGenres = createAsyncThunk('filterGenres/fetchFilterMovies', async () => {
     
     const urlGenres = url + `/list`
     console.log("URL",urlGenres)

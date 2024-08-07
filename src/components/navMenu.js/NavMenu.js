@@ -17,7 +17,7 @@ const StyledButton = styled(Button)(({ active }) => ({
 }));
 
 export default function NavMenu(props) {
-    const { item} = props;
+    const {item} = props;
     const navigate = useNavigate();
     const location = useLocation();
     const { items = [], status } = useSelector((state) => state.filterGenres); // Default items to an empty array
