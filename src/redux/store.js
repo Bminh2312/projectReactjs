@@ -5,8 +5,11 @@ import detailMovieSlice from "./movieDetailSlice"
 import videoMovieSlice from "./videoMovieSlice"
 import userSlice from "./userSlice"
 import searchMovieSlice from "./searchMovieSlice"
-import recommendMoviesSlice from './recommendMovie'
-import reviewMoviesSlice from './reviewMovie'
+import recommendMoviesSlice from './recommendMovieSlice'
+import reviewMoviesSlice from './reviewMovieSlice'
+import moviePopularSlice from './popularMovieSlice'
+import genresSlice from './filterGenresSlice'
+import genresMovieSlice from './movieGenresSlice'
 const store=configureStore({
     reducer:{
         upComingMovies:movieUpComingSlice,
@@ -16,6 +19,9 @@ const store=configureStore({
         searchMovie:searchMovieSlice,
         recommendMovies:recommendMoviesSlice,
         reviewMovies:reviewMoviesSlice,
+        popularMovies:moviePopularSlice,
+        filterGenres:genresSlice,
+        genresMovies:genresMovieSlice,
         user:userSlice,
     }
 })

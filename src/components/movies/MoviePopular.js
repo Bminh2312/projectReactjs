@@ -1,17 +1,15 @@
+import { Box, Button, Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Grid, Pagination, Typography } from '@mui/material'
-import MovieItems from '../movieItem/MovieItems';
-import Loading from '../loading/Loading';
-import { fetchSearchMovie } from '../../redux/searchMovieSlice';
 import Paging from '../paging/Paging';
+import Loading from '../loading/Loading';
+import { fetchMoviesPopular } from '../../redux/popularMovieSlice';
+import MovieItems from '../movieItem/MovieItems';
 
-export default function MovieSearch(props) {
-    const { search } = props;
-    console.log(search)
+export default function MoviePopular() {
     const [page, setPage] = useState(1);
     const [rowsToShow, setRowsToShow] = useState(2);
-    const { items, total, status, path } = useSelector(state => state.searchMovie)
+    const { items, total, status, path } = useSelector(state => state.popularMovies)
     const dispatch = useDispatch();
 
     const handleLoadMore = () => {
@@ -20,11 +18,11 @@ export default function MovieSearch(props) {
 
     useEffect(() => {
         if (status === 'start') {
-            dispatch(fetchSearchMovie({ search: search, page: page }));
+            dispatch(fetchMoviesPopular(page));
             setRowsToShow(2)
         }
 
-    }, [page, search])
+    }, [page])
 
     if (status === 'loading') {
         return <Loading />
@@ -34,8 +32,8 @@ export default function MovieSearch(props) {
 
 
 
-    return (
-        <Box sx={{ width: '100%' }}>
+  return (
+    <Box sx={{ width: '100%' }}>
             <Box sx={{ mt: 5, mb: 5, textAlign: 'start' }}>
                 <Typography
                     variant="h6"
@@ -47,9 +45,9 @@ export default function MovieSearch(props) {
                     variant="h2"
 
                     sx={{ color: "#fff" }}
-                >{search}</Typography>
+                >Popular Movies</Typography>
             </Box>
-            <Grid container sx={{ marginTop: "10px", textAlign: 'center', justifyContent: 'center', alignItems: 'center' }} rowSpacing={2} >
+            <Grid sx={{ marginTop: "10px" }} container rowSpacing={2} columnSpacing={{ sm: 2, md: 2, xl: 0, lg: 1 }}>
                 {items && items.results && items.results.slice(0, rowsToShow * 4).map((item, index) => (
                     <MovieItems item={item} key={index} path={path} />
                 ))}
@@ -69,11 +67,12 @@ export default function MovieSearch(props) {
                     }} onClick={handleLoadMore}>Load More</Button>
                 </Box>
             )}
+
             {total === 0 ? <></> : <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '10px' }}>
                 <Paging total={total} page={page} setPage={setPage} />
             </Box>
             }
 
         </Box>
-    )
+  )
 }

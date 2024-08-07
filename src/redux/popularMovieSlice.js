@@ -10,15 +10,14 @@ const initialState = {
 }
 
 const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWVmNGI2YjNiNGZlMjRhZDk0OTkyYWQzNDhiMTA1NiIsIm5iZiI6MTcyMjU2NjMyNS4yMzc5MTIsInN1YiI6IjY2YWIyZGNmYzFhZmMwZmE4N2MwMDZjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.R75_Aiz4ZtY81MT49o0RZ8WOpY4Ous1f3rBWbvulRB0"
-const url = 'https://api.themoviedb.org/3/search/movie'
+const url = 'https://api.themoviedb.org/3/discover/movie'
 
 
-
-
-export const fetchSearchMovie = createAsyncThunk('searchMovie/fetchSearchMovie', async ({search,page}) => {
-    const urlSearch = url + `?query=${search}&include_adult=false&language=en-US&page=${page}`
+export const fetchMoviesPopular = createAsyncThunk('movies/fetchMoviesPopular', async (page) => {
+    
+    const urlPopular = url + `?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`
     try {
-        const response = await axios.get(urlSearch, {
+        const response = await axios.get(urlPopular, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -31,32 +30,27 @@ export const fetchSearchMovie = createAsyncThunk('searchMovie/fetchSearchMovie',
     }
 });
 
-// export const pageProducts = createAsyncThunk('products/pageProducts', async ({page,limit}) => {
-//     const respone = await axios.get(url+'/'+'?page='+page+'&'+'limit='+limit);
-//     return respone.data;
-// })
 
-const searchMovieSlice = createSlice({
-    name: 'searchMovie',
+const moviePopularSlice = createSlice({
+    name: 'popularMovies',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchSearchMovie.pending, (state) => {
+            .addCase(fetchMoviesPopular.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(fetchSearchMovie.fulfilled, (state, action) => {
+            .addCase(fetchMoviesPopular.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.items = action.payload
                 state.total = action.payload.total_pages
                 state.status = 'start'
             })
-            .addCase(fetchSearchMovie.rejected, (state, action) => {
+            .addCase(fetchMoviesPopular.rejected, (state, action) => {
                 state.status = 'failed'
-                state.error = action.payload
+                state.error = action.payload.status_message
             })
-
     }
 })
 
-export default searchMovieSlice.reducer
+export default moviePopularSlice.reducer

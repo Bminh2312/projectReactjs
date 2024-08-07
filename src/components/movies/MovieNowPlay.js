@@ -4,12 +4,14 @@ import { fetchMoviesNowPlay } from '../../redux/movieNowPlaySlice';
 import { Box, Button, Grid, Pagination, Typography } from '@mui/material'
 import MovieItems from '../movieItem/MovieItems';
 import Loading from '../loading/Loading';
+import Paging from '../paging/Paging';
 
 export default function MovieNowPlay() {
     const [page, setPage] = useState(1);
     const [rowsToShow, setRowsToShow] = useState(2);
     const { items, total, status, path } = useSelector(state => state.nowPlayMovies)
     const dispatch = useDispatch();
+    console.log("So item", total)
 
     const handleLoadMore = () => {
         setRowsToShow(prev => prev + 2);
@@ -32,7 +34,7 @@ export default function MovieNowPlay() {
 
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%'}}>
             <Box sx={{ mt: 5, mb: 5, textAlign: 'start' }}>
                 <Typography
                     variant="h6"
@@ -66,8 +68,8 @@ export default function MovieNowPlay() {
                     }} onClick={handleLoadMore}>Load More</Button>
                 </Box>
             )}
-            {total !== 0 ? <></> : <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '10px' }}>
-                <Pagination total={total} page={page} setPage={setPage} />
+            {total === 0 ? <></> : <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '10px' }}>
+                <Paging total={total} page={page} setPage={setPage} />
             </Box>
             }
 

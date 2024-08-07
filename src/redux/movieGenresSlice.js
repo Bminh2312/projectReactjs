@@ -10,20 +10,21 @@ const initialState = {
 }
 
 const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWVmNGI2YjNiNGZlMjRhZDk0OTkyYWQzNDhiMTA1NiIsIm5iZiI6MTcyMjU2NjMyNS4yMzc5MTIsInN1YiI6IjY2YWIyZGNmYzFhZmMwZmE4N2MwMDZjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.R75_Aiz4ZtY81MT49o0RZ8WOpY4Ous1f3rBWbvulRB0"
-const url = 'https://api.themoviedb.org/3/search/movie'
+const url = 'https://api.themoviedb.org/3/discover/movie'
 
 
 
 
-export const fetchSearchMovie = createAsyncThunk('searchMovie/fetchSearchMovie', async ({search,page}) => {
-    const urlSearch = url + `?query=${search}&include_adult=false&language=en-US&page=${page}`
+export const fetchGenresMovie = createAsyncThunk('genresMovies/fetchGenresMovie', async ({page,genres}) => {
+    const urlGenresMovie = url + `?page=${page}&without_genres=${genres}`
+    console.log(urlGenresMovie)
     try {
-        const response = await axios.get(urlSearch, {
+        const response = await axios.get(urlGenresMovie, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         });
-        console.log("Response data:", response.data);
+        console.log("Response genres:", response.data);
         return response.data;
     } catch (error) {
         console.error("Error fetching movies:", error);
@@ -31,32 +32,30 @@ export const fetchSearchMovie = createAsyncThunk('searchMovie/fetchSearchMovie',
     }
 });
 
-// export const pageProducts = createAsyncThunk('products/pageProducts', async ({page,limit}) => {
-//     const respone = await axios.get(url+'/'+'?page='+page+'&'+'limit='+limit);
-//     return respone.data;
-// })
 
-const searchMovieSlice = createSlice({
-    name: 'searchMovie',
+
+const genresMovieSlice = createSlice({
+    name: 'genresMovies',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchSearchMovie.pending, (state) => {
+            .addCase(fetchGenresMovie.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(fetchSearchMovie.fulfilled, (state, action) => {
+            .addCase(fetchGenresMovie.fulfilled, (state, action) => {
+                console.log("adasdasd",action.payload)
                 state.status = 'succeeded'
                 state.items = action.payload
                 state.total = action.payload.total_pages
                 state.status = 'start'
             })
-            .addCase(fetchSearchMovie.rejected, (state, action) => {
+            .addCase(fetchGenresMovie.rejected, (state, action) => {
                 state.status = 'failed'
-                state.error = action.payload
+                state.error = action.payload.status_message
             })
 
     }
 })
 
-export default searchMovieSlice.reducer
+export default genresMovieSlice.reducer

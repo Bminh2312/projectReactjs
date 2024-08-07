@@ -5,6 +5,9 @@ import MovieDetailPage from "./pages/movieDetailPage/MovieDetailPage";
 import NotFoundPage from "./pages/notFoundPage/NotFoundPage";
 import MovieSearchPage from './pages/movieSearchPage/MovieSearchPage';
 import MoviePage from './pages/moviePage/MoviePage';
+import MovieGenresPage from './pages/movieGenresPage/MovieGenresPage';
+import TVSeriesPage from './pages/tvPage/TVSeriesPage';
+import HomePage from './pages/home/HomePage';
 
 
 
@@ -12,9 +15,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<MoviePage />} />
+        <Route path='/' element={<HomePage />} />
         <Route path='/movie' element={<MoviePage />} />
+        <Route path='/tvseries' element={<TVSeriesPage />} />
         <Route path='/movieDetailPage/:movie_id' element={<MovieDetailPage />} />
+        <Route path='/genres/:genres_name' element={<MovieGenresPage />} />
         <Route path='/search/:search' element={<MovieSearchPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>

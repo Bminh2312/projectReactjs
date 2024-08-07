@@ -9,8 +9,8 @@ const userSlice = createSlice({
     name:"user",
     initialState,
     reducers:{
-        getUser(state,action){
-           state.user = action.payload
+        getUser(state){
+           state.user = JSON.parse(localStorage.getItem('user'))
             
         },
         removeUser(state){

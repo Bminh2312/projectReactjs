@@ -19,11 +19,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeUser } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import SliderImg from '../Slider/SliderImg';
+import NavMenu from '../navMenu.js/NavMenu';
+import AccountMenu from '../account/AccountMenu';
 
-const StyledButton = styled(Button)(({ theme, active }) => ({
-    margin: theme.spacing(1),
+const StyledButton = styled(Button)(({ active }) => ({
+    margin: "10px",
     display: 'block',
-    marginTop: theme.spacing(2),
+    marginTop: "10px",
     '&:hover': {
         color: '#e4d804',
     },
@@ -74,25 +76,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-const pages = ['Movie', 'TV Show', 'Pricing', 'Blog', 'Contact'];
+const pages = ['Movie', 'TV Show', 'Genres', 'Release  year', 'Blog', 'Contact'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function Header(props) {
     const navigate = useNavigate()
+    const genres = 'action'
     const [search, setSearch] = React.useState('')
     const [scroll, setScroll] = React.useState(false);
     const { user } = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const [activePage, setActivePage] = React.useState('');
     const { flag } = props
-    const handleActive = (page) => {
-        if (page === 'Home') {
-            setActivePage('/');
-        } else {
-            setActivePage(`/${page.toLowerCase().replace(' ', '')}`);
-        }
-    };
-
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -103,23 +98,11 @@ export default function Header(props) {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
 
     };
-
-    const option = (text) => {
-        if (text.toLowerCase() === 'logout' && text.length > 0) {
-            dispatch(removeUser())
-            setAnchorElUser(null);
-        }
-    }
-
-
 
 
 
@@ -181,45 +164,11 @@ export default function Header(props) {
                         >
                             <MenuIcon />
                         </IconButton>
-
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
-                        >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={() => handleActive(page)}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
                     </Box>
-
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'end', alignItems: 'center' }}>
-                        {pages.map((page) => (
-                            <StyledButton
-                                component={RouterLink}
-                                key={page}
-                                to={page === 'Home' ? '/' : `/${page.toLowerCase().replace(' ', '')}`}
-                                onClick={() => handleActive(page)}
-                                active={activePage === (page === 'Home' ? '/' : `/${page.toLowerCase().replace(' ', '')}`)}
-                            >
-                                {page}
-                            </StyledButton>
-                        ))}
+                        <NavMenu item={"Movie"} />
+                        <NavMenu item={"TV Series"} />
+                        <NavMenu item={"Genres"} />
                     </Box>
 
                     <Search>
@@ -240,40 +189,9 @@ export default function Header(props) {
                         />
                     </Search>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                {
-
-                                    <Avatar alt="Remy Sharp" src={user != null ? `${user.photoURL}` : "/static/images/avatar/2.jpg"} />
-
-                                }
-
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={() => option(setting)}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
+                    
+                    <AccountMenu/>
+                    
                 </Toolbar>
                 {flag ? <></> : <Paper elevation={0} square sx={{ color: 'white', position: 'absolute', width: '30%', background: 'none', top: '40%', left: '10%', fontFamily: "Poppins" }}>
                     <h6 style={{ color: '#e4d804', fontSize: '170%' }}>Movflx</h6>

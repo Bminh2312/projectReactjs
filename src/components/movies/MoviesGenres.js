@@ -1,36 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Grid, Pagination, Typography } from '@mui/material'
-import MovieItems from '../movieItem/MovieItems';
-import Loading from '../loading/Loading';
-import { fetchSearchMovie } from '../../redux/searchMovieSlice';
+import { fetchGenresMovie } from '../../redux/movieGenresSlice';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import Paging from '../paging/Paging';
+import Loading from '../loading/Loading';
+import MovieItems from '../movieItem/MovieItems';
 
-export default function MovieSearch(props) {
-    const { search } = props;
-    console.log(search)
+export default function MoviesGenres(props) {
+    const {genres_name} = props
     const [page, setPage] = useState(1);
     const [rowsToShow, setRowsToShow] = useState(2);
-    const { items, total, status, path } = useSelector(state => state.searchMovie)
+    const { items, total, status, path } = useSelector(state => state.genresMovies)
+
     const dispatch = useDispatch();
 
     const handleLoadMore = () => {
         setRowsToShow(prev => prev + 2);
     };
 
+    
     useEffect(() => {
         if (status === 'start') {
-            dispatch(fetchSearchMovie({ search: search, page: page }));
+            dispatch(fetchGenresMovie({page:page,genres:genres_name}));
             setRowsToShow(2)
         }
-
-    }, [page, search])
+    }, [page])
 
     if (status === 'loading') {
         return <Loading />
 
 
     }
+    console.log(items)
 
 
 
@@ -47,7 +48,9 @@ export default function MovieSearch(props) {
                     variant="h2"
 
                     sx={{ color: "#fff" }}
-                >{search}</Typography>
+                >
+                    {genres_name}
+                </Typography>
             </Box>
             <Grid container sx={{ marginTop: "10px", textAlign: 'center', justifyContent: 'center', alignItems: 'center' }} rowSpacing={2} >
                 {items && items.results && items.results.slice(0, rowsToShow * 4).map((item, index) => (

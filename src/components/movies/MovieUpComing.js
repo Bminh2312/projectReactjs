@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchMoviesUpComing } from '../../redux/movieUpComingSlice'
 import Pagination from '../paging/Paging'
 import Loading from '../loading/Loading'
+import Paging from '../paging/Paging'
 
 
 export default function Movie() {
@@ -73,9 +74,10 @@ export default function Movie() {
                 </Box>
             )}
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '10px' }}>
-                <Pagination total={total} page={page} setPage={setPage} />
+            {total === 0 ? <></> : <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '10px' }}>
+                <Paging total={total} page={page} setPage={setPage} />
             </Box>
+            }
 
         </Box>
     )

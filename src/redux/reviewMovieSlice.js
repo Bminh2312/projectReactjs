@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
 
 const initialState = {
-    items: {},
+    items: [],
     status: 'start',
     path: 'https://image.tmdb.org/t/p/w500',
     total: 0,
