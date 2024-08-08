@@ -13,7 +13,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
         backgroundColor: '#c0b800', // Color on hover (optional)
     },
     margin: "0 auto",
-    
+
     '&:hover': {
         color: '#e4d804',
     },
@@ -29,7 +29,11 @@ export default function SignInGG(props) {
             localStorage.setItem("user", JSON.stringify(data.user))
             dispatch(getUser(data.user))
             setOpen(false)
-        })
+        }).catch((error) => {
+            // Clear the popup reference on error
+            authPopup = null;
+            console.error("Error during sign-in:", error);
+        });
     }
 
     useEffect(() => {
@@ -37,7 +41,7 @@ export default function SignInGG(props) {
     })
     return (
         <div style={{ textAlign: 'center' }}>
-            <StyledButton onClick={handleClick}><i class="fa-solid fa-envelope" style={{margin:"5px"}}></i>Sign in</StyledButton>
+            <StyledButton onClick={handleClick}><i class="fa-solid fa-envelope" style={{ margin: "5px" }}></i>Sign in</StyledButton>
         </div>
     )
 }
