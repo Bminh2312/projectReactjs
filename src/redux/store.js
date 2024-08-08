@@ -10,6 +10,7 @@ import reviewMoviesSlice from './reviewMovieSlice'
 import moviePopularSlice from './popularMovieSlice'
 import genresSlice from './filterGenresSlice'
 import genresMovieSlice from './movieGenresSlice'
+import favoriteMovieSlice from './favoriteMovieSlice'
 const store=configureStore({
     reducer:{
         upComingMovies:movieUpComingSlice,
@@ -22,6 +23,7 @@ const store=configureStore({
         popularMovies:moviePopularSlice,
         filterGenres:genresSlice,
         genresMovies:genresMovieSlice,
+        favoriteMovie:favoriteMovieSlice,
         user:userSlice,
     }
 })

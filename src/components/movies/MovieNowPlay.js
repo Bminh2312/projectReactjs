@@ -10,6 +10,7 @@ export default function MovieNowPlay() {
     const [page, setPage] = useState(1);
     const [rowsToShow, setRowsToShow] = useState(2);
     const { items, total, status, path } = useSelector(state => state.nowPlayMovies)
+    const { favoriteItems } = useSelector(state => state.favoriteMovie)
     const dispatch = useDispatch();
     console.log("So item", total)
 
