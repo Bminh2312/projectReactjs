@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Grid, Pagination, Typography } from '@mui/material'
-import MovieItems from '../movieItem/MovieItems';
 import Loading from '../loading/Loading';
-import { fetchSearchMovie } from '../../redux/searchMovieSlice';
 import Paging from '../paging/Paging';
+import TVItem from '../tvtem/TVItem';
+import { fetchSearchTV } from '../../redux/tvSearchSlice';
 
 
-export default function MovieSearch(props) {
+export default function TVSearch(props) {
     const { name } = props;
-    
     const [page, setPage] = useState(1);
     const [rowsToShow, setRowsToShow] = useState(2);
-    const { items, total, status, path } = useSelector(state => state.searchMovie)
+    const { items, total, status, path } = useSelector(state => state.searchTV)
     const dispatch = useDispatch();
 
     const handleLoadMore = () => {
@@ -21,7 +20,7 @@ export default function MovieSearch(props) {
 
     useEffect(() => {
         if (status === 'start') {
-            dispatch(fetchSearchMovie({ search: name, page: page }));
+            dispatch(fetchSearchTV({ search: name, page: page }));
             setRowsToShow(2)
         }
 
@@ -52,7 +51,7 @@ export default function MovieSearch(props) {
             </Box>
             <Grid container sx={{ marginTop: "10px", textAlign: 'center', justifyContent: 'center', alignItems: 'center' }} rowSpacing={2} >
                 {items && items.results && items.results.slice(0, rowsToShow * 4).map((item, index) => (
-                    <MovieItems item={item} key={index} path={path} />
+                    <TVItem item={item} key={index} path={path} />
                 ))}
             </Grid>
             {rowsToShow * 4 < (items && items.results && items.results.length) && (

@@ -1,9 +1,11 @@
+
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Modal, Link as MuiLink, styled, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SignInGG from '../signInWithGG/SignInGG';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMovie, getMovie, removeMovie } from '../../redux/favoriteMovieSlice';
+import { addTV, getTV, removeTV } from '../../redux/favoriteTVSlice';
 
 const StyledButton = styled(Button)(({ theme }) => ({
     margin: theme.spacing(0.5),
@@ -29,14 +31,14 @@ const style = {
     p: 4,
 };
 
-export default function MovieItems(props) {
+export default function TVItem(props) {
     const [open, setOpen] = React.useState(false);
     const [love, setLove] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const { user } = useSelector((state) => state.user);
-    const { favoriteItems } = useSelector(state => state.favoriteMovie);
+    const { favoriteTVItems } = useSelector(state => state.favoriteTV);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -44,16 +46,16 @@ export default function MovieItems(props) {
     const imgSrc = path + '/' + item.backdrop_path;
     
 
-    const date = item.release_date;
+    const date = item.first_air_date;
     const year = date.split('-')[0];
 
-    const movieLink = `/movieDetailPage/${item.id}`;
+    const movieLink = `/tv/${item.id}`;
 
     // Check if the item is in the favorite list
     useEffect(() => {
-        const isFavorite = favoriteItems.some(favItem => favItem.title === item.title && favItem.img === imgSrc);
+        const isFavorite = favoriteTVItems.some(favItem => favItem.title === item.original_name && favItem.img === imgSrc);
         setLove(isFavorite);
-    }, [favoriteItems, item.title, imgSrc]);
+    }, [favoriteTVItems, item.original_name, imgSrc]);
 
     const handleNavigation = () => {
         if (user !== undefined && user !== null) {
@@ -64,21 +66,23 @@ export default function MovieItems(props) {
     };
 
     const handleLove = (title, src, id) => {
-        const isFavorite = favoriteItems.some(item => item.title === title && item.img === src);
+        const isFavorite = favoriteTVItems.some(item => item.title === title && item.img === src);
         if (isFavorite) {
 
-            dispatch(removeMovie({ title: title, img: src, id: id}));
+            dispatch(removeTV({ title: title, img: src, id: id}));
+           
         } else {
-            dispatch(addMovie({ title: title, img: src, id: id }));
+            dispatch(addTV({ title: title, img: src, id: id }));
+           
             
         }
         
-        // localStorage.setItem(JSON.stringify('favorite', favoriteItems))
+        
         setLove(!love);
     };
 
     useEffect(()=>{
-        dispatch(getMovie()) 
+        dispatch(getTV()) 
     },[])
 
     return (
@@ -89,13 +93,13 @@ export default function MovieItems(props) {
                         <CardMedia
                             sx={{ height: 300, '&:hover': { transform: 'scale(1.2)' }, transition: '1s' }}
                             image={imgSrc}
-                            title={item.title}
+                            title={item.original_name}
                         />
                     </Box>
                     <CardContent>
                         <Typography gutterBottom variant="h6" component="div" sx={{ color: '#ffc048', marginBottom: '10px' }}>
                             <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-evenly', whiteSpace: 'normal' }}>
-                                <p style={{ width: '70%', fontSize: "90%", textAlign: 'start' }}>{item.title}</p>
+                                <p style={{ width: '70%', fontSize: "90%", textAlign: 'start' }}>{item.original_name}</p>
                                 {year&& <p style={{ width: '30%', textAlign: 'end' }}>{year}</p>}
                             </Box>
                         </Typography>
@@ -122,7 +126,7 @@ export default function MovieItems(props) {
                                 bottom: '94%',
                                 left: '81%',
                             }}
-                            onClick={() => handleLove(item.title, imgSrc, item.id)}
+                            onClick={() => handleLove(item.original_name, imgSrc, item.id)}
                         >
                             {love ? <i className="fa-solid fa-heart"></i> : <i className="fa-regular fa-heart"></i>}
                         </Button>
@@ -148,3 +152,5 @@ export default function MovieItems(props) {
         </>
     );
 }
+
+

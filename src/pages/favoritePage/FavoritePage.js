@@ -5,6 +5,7 @@ import Main from '../../components/main/Main'
 import Footer from '../../components/footer/Footer'
 import FavoriteMovie from '../../components/favoriteMovie/FavoriteMovie'
 
+
 export default function FavoritePage() {
     const [flag, setFlag] = useState(false)
   return (

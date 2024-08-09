@@ -11,6 +11,10 @@ import moviePopularSlice from './popularMovieSlice'
 import genresSlice from './filterGenresSlice'
 import genresMovieSlice from './movieGenresSlice'
 import favoriteMovieSlice from './favoriteMovieSlice'
+import airingTodayTVSlice from "./airingTodayTVSlice"
+import favoriteTVSlice from "./favoriteTVSlice"
+import searchTVSlice from "./tvSearchSlice"
+import ontheairTVSlice from "./ontheairTVSlice"
 const store=configureStore({
     reducer:{
         upComingMovies:movieUpComingSlice,
@@ -24,6 +28,10 @@ const store=configureStore({
         filterGenres:genresSlice,
         genresMovies:genresMovieSlice,
         favoriteMovie:favoriteMovieSlice,
+        airingTodayTV:airingTodayTVSlice,
+        favoriteTV:favoriteTVSlice,
+        searchTV:searchTVSlice,
+        onTheAirTV:ontheairTVSlice,
         user:userSlice,
     }
 })

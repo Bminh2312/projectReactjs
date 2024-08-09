@@ -10,10 +10,11 @@ const favoriteMovieSlice = createSlice({
     initialState,
     reducers: {
         getMovie(state) {
-            state.favoriteItems = JSON.parse(localStorage.getItem('favorite'))
+            const storedFavorites = localStorage.getItem('favorite')
+            state.favoriteItems = storedFavorites ? JSON.parse(storedFavorites) : [];
         },
         addMovie(state, action) {
-            const { title, img } = action.payload;
+            const { title, img, id } = action.payload;
             
             // Check if the movie already exists in favoriteItems
             const existingItem = state.favoriteItems.find(item => item.title === title && item.img === img);
@@ -22,18 +23,20 @@ const favoriteMovieSlice = createSlice({
                 // Generate a new ID
                 const newId = state.favoriteItems.length === 0
                     ? 1
-                    : Math.max(...state.favoriteItems.map(item => item.id)) + 1;
+                    : Math.max(...state.favoriteItems.map(item => item.movieId)) + 1;
 
                 // Add new movie to favoriteItems
                 state.favoriteItems.push({
                     title,
                     img,
-                    id: newId,
+                    movieId: newId,
+                    id,
                     status: false
                 });
 
                 // Update local storage
                 localStorage.setItem('favorite', JSON.stringify(state.favoriteItems));
+                console.log("aaa",state.favoriteItems)
             }
             
             console.log(state.favoriteItems);
@@ -41,7 +44,7 @@ const favoriteMovieSlice = createSlice({
         deleteMovie(state, action) {
             console.log(action.payload.id)
             state.favoriteItems = state.favoriteItems.filter(
-                item => !(item.id === action.payload.id)
+                item => !(item.movieId === action.payload.id)
             );
         },
         removeMovie(state, action) {

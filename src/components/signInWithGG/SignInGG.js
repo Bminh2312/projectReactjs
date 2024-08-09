@@ -4,6 +4,7 @@ import { signInWithPopup } from 'firebase/auth'
 import { auth, provider } from '../../config/gmailCofig'
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../redux/userSlice';
+import { ToastContainer, toast } from 'react-toastify';
 
 const StyledButton = styled(Button)(({ theme }) => ({
     margin: theme.spacing(0.5),
@@ -31,7 +32,7 @@ export default function SignInGG(props) {
             setOpen(false)
         }).catch((error) => {
             // Clear the popup reference on error
-            authPopup = null;
+            toast("Error during sign-in:", error);
             console.error("Error during sign-in:", error);
         });
     }
@@ -42,6 +43,7 @@ export default function SignInGG(props) {
     return (
         <div style={{ textAlign: 'center' }}>
             <StyledButton onClick={handleClick}><i class="fa-solid fa-envelope" style={{ margin: "5px" }}></i>Sign in</StyledButton>
+            <ToastContainer />
         </div>
     )
 }

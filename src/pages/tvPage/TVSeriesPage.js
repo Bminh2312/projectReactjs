@@ -3,13 +3,14 @@ import Main from '../../components/main/Main'
 import Header from '../../components/header/Header'
 import { Container } from '@mui/material'
 import Footer from '../../components/footer/Footer'
+import TV from '../../components/TV/TV'
 
 export default function TVSeriesPage() {
     const [flag, setFlag] = useState(false)
   return (
     <Container maxWidth='xxl' sx={{ background: '#1e272e', paddingLeft: '0 !important', paddingRight: '0 !important' }}>
       <Header flag={flag} setFlag={setFlag} />
-      <Main children={[]} />
+      <Main children={[<TV type='Airing Today'/>,<TV type='On The Air'/>,<TV type='Popular'/>]} />
       <Footer />
     </Container>
   )

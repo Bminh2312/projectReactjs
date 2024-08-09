@@ -1,18 +1,18 @@
-import { Container } from '@mui/material'
 import React, { useState } from 'react'
-import Main from '../../components/main/Main'
-import MovieSearch from '../../components/movies/MovieSearch'
+import TVSearch from '../../components/TV/TVSearch'
+import { Container } from '@mui/material'
 import Header from '../../components/header/Header'
-import { useParams } from 'react-router-dom'
+import Main from '../../components/main/Main'
 import Footer from '../../components/footer/Footer'
+import { useParams } from 'react-router-dom'
 
-export default function MovieSearchPage() {
+export default function TVSearchPage() {
     const { name } = useParams()
     const [flag, setFlag] = useState(true)
     return (
         <Container maxWidth="xxl" sx={{ background: '#1e272e', paddingLeft: '0 !important', paddingRight: '0 !important' }}>
             <Header flag={flag} setFlag={setFlag} />
-            <Main children={<MovieSearch name={name}/>}/>
+            <Main children={<TVSearch name={name}/>}/>
             <Footer />
         </Container>
     )

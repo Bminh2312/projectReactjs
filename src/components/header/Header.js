@@ -1,83 +1,21 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Avatar, Button, Container, Drawer, List, ListItem, ListItemText } from '@mui/material';
-import Tooltip from '@mui/material/Tooltip';
-import SearchIcon from '@mui/icons-material/Search';
-import Paper from '@mui/material/Paper';
-import { Link as RouterLink } from 'react-router-dom';
+import { Button, Container, Paper } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeUser } from '../../redux/userSlice';
-import { useNavigate } from 'react-router-dom';
 import SliderImg from '../Slider/SliderImg';
 import NavMenu from '../navMenu.js/NavMenu';
 import AccountMenu from '../account/AccountMenu';
 import DrawerNav from '../draw/DrawerNav';
-
-const StyledButton = styled(Button)(({ active }) => ({
-    margin: "10px",
-    display: 'block',
-    marginTop: "10px",
-    '&:hover': {
-        color: '#e4d804',
-    },
-    backgroundColor: active ? '#e4d804' : 'transparent',
-    color: active ? '#000' : 'white',
-}));
-
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-    },
-}));
+import Search from '../search/SearchType';
+import { useLocation } from 'react-router-dom';
 
 const pages = ['Movie', 'TV Series', 'Genres', 'Favorite'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function Header(props) {
-    const navigate = useNavigate();
-    const [search, setSearch] = React.useState('');
     const [scroll, setScroll] = React.useState(false);
     const { user } = useSelector((state) => state.user);
     const dispatch = useDispatch();
@@ -85,19 +23,31 @@ export default function Header(props) {
     const { flag } = props;
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-   
+    const [search, setSearch] = React.useState('');
+    const location = useLocation(); // Hook to get current location
+
+    React.useEffect(() => {
+        // Extract the current search value from URL
+        const pathParts = location.pathname.split('/');
+        if (pathParts.length >= 2) {
+            const currentSearch = pathParts[1]; // Assuming /search/:term
+            if (currentSearch) {
+                setSearch(currentSearch);
+            }
+        }
+    }, [location.pathname]);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
+
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-    
-    
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -138,7 +88,7 @@ export default function Header(props) {
                         Sunrise
                     </Typography>
 
-                    <DrawerNav pages={pages}/>
+                    <DrawerNav pages={pages} />
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'end', alignItems: 'center' }}>
                         <NavMenu item={"Movie"} />
@@ -146,22 +96,7 @@ export default function Header(props) {
                         <NavMenu item={"Genres"} />
                         <NavMenu item={"Favorite"} />
                     </Box>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    navigate(`/search/${search}`);
-                                }
-                            }}
-                        />
-                    </Search>
+                    <Search search={search} /> {/* Truyền giá trị search từ URL */}
                     <AccountMenu />
                 </Toolbar>
                 {flag ? <></> : (
@@ -182,27 +117,6 @@ export default function Header(props) {
                     </Paper>
                 )}
             </Container>
-            {/* <Drawer
-                anchor="left"
-                open={drawerOpen}
-                onClose={handleDrawerClose}
-            >
-                <Box
-                    sx={{ width: 250 }}
-                    role="presentation"
-                    onClick={handleDrawerClose}
-                    onKeyDown={handleDrawerClose}
-                >
-                    <List>
-                        {pages.map((page, index) => (
-                            <ListItem button key={index}>
-                                <ListItemText primary={page} />
-                            </ListItem>
-                        ))}
-                    </List>
-                </Box>
-            </Drawer> */}
-            
         </AppBar>
     );
 }
