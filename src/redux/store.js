@@ -15,6 +15,7 @@ import airingTodayTVSlice from "./airingTodayTVSlice"
 import favoriteTVSlice from "./favoriteTVSlice"
 import searchTVSlice from "./tvSearchSlice"
 import ontheairTVSlice from "./ontheairTVSlice"
+import popularTVSlice from "./popularTVSlice"
 const store=configureStore({
     reducer:{
         upComingMovies:movieUpComingSlice,
@@ -32,6 +33,7 @@ const store=configureStore({
         favoriteTV:favoriteTVSlice,
         searchTV:searchTVSlice,
         onTheAirTV:ontheairTVSlice,
+        popularTV:popularTVSlice,
         user:userSlice,
     }
 })

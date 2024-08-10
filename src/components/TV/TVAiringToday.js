@@ -50,7 +50,7 @@ export default function TV(props) {
                     variant="h2"
 
                     sx={{ color: "#fff" }}
-                >Airing Today</Typography>
+                >{type}</Typography>
             </Box>
             <Grid sx={{ marginTop: "10px" }} container rowSpacing={2} columnSpacing={{ sm: 2, md: 2, xl: 0, lg: 1 }}>
                 {items && items.results && items.results.slice(0, rowsToShow * 4).map((item, index) => (
