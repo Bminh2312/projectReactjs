@@ -12,16 +12,20 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, removeUser } from '../../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
+import SignInGG from '../signInWithGG/SignInGG';
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { user } = useSelector((state) => state.user)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+
     setAnchorEl(null);
 
   };
@@ -32,11 +36,20 @@ export default function AccountMenu() {
       handleClose(null);
     }
   }
+
+  const profile = (text) => {
+    if (text.toLowerCase() === 'profile' && text.length > 0) {
+      navigate('/profile')
+      handleClose(null);
+    }
+  }
   React.useEffect(() => {
     dispatch(getUser())
   }, [])
   return (
     <React.Fragment>
+      {user == null ? <SignInGG/>
+      :
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account settings">
           <IconButton
@@ -47,10 +60,13 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }} src={user != null ? `${user.photoURL}` : <Avatar />} />
+            
+            <Avatar sx={{ width: 32, height: 32 }} src={user != null ? `${user.img}` : <Avatar />} />
           </IconButton>
         </Tooltip>
       </Box>
+      }
+      
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -86,8 +102,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar src={user != null ? `${user.photoURL}` : <Avatar />} /> Profile
+        <MenuItem onClick={(()=>{
+          profile('profile')
+          handleClose()
+        })}>
+          <Avatar src={user != null ? `${user.img}` : <Avatar />} /> Profile
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Avatar /> My account

@@ -11,6 +11,8 @@ import HomePage from './pages/home/HomePage';
 import FavoritePage from './pages/favoritePage/FavoritePage';
 import TVSearchPage from './pages/tvPage/TVSearchPage';
 import LoginPage from './pages/loginPage/LoginPage';
+import ProfilePage from './pages/profilePage/ProfilePage';
+import TVDetailPage from './pages/tvDetail/TVDetailPage';
 
 
 
@@ -23,9 +25,11 @@ function App() {
         <Route path='/tvseries' element={<TVSeriesPage />} />
         <Route path='/favorite' element={<FavoritePage />} />
         <Route path='/movieDetailPage/:movie_id' element={<MovieDetailPage />} />
+        <Route path='/tvDetailPage/:tv_id' element={<TVDetailPage />} />
         <Route path='/genres/:genres_name' element={<MovieGenresPage />} />
         <Route path='/movie/:name' element={<MovieSearchPage />} />
         <Route path='/tvseries/:name' element={<TVSearchPage />} />
+        <Route path='/profile' element={<ProfilePage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </Router>

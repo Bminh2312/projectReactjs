@@ -9,12 +9,12 @@ const initialState = {
 }
 
 const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWVmNGI2YjNiNGZlMjRhZDk0OTkyYWQzNDhiMTA1NiIsIm5iZiI6MTcyMjU2NjMyNS4yMzc5MTIsInN1YiI6IjY2YWIyZGNmYzFhZmMwZmE4N2MwMDZjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.R75_Aiz4ZtY81MT49o0RZ8WOpY4Ous1f3rBWbvulRB0"
-const url = 'https://api.themoviedb.org/3/movie'
+const url = 'https://api.themoviedb.org/3/tv'
 
 
 
 
-export const fetchDetailMovie = createAsyncThunk('detailMovies/fetchDetailMovie', async (id) => {
+export const fetchDetailTV = createAsyncThunk('detailTV/fetchDetailTV', async (id) => {
     const urlDetail = url + `/${id}?language=en-US`
     try {
         const response = await axios.get(urlDetail, {
@@ -32,21 +32,21 @@ export const fetchDetailMovie = createAsyncThunk('detailMovies/fetchDetailMovie'
 
 
 
-const detailMovieSlice = createSlice({
-    name: 'detailMovies',
+const detailTVSlice = createSlice({
+    name: 'detailTV',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchDetailMovie.pending, (state) => {
+            .addCase(fetchDetailTV.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(fetchDetailMovie.fulfilled, (state, action) => {
+            .addCase(fetchDetailTV.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.item = action.payload
                 state.status = 'start'
             })
-            .addCase(fetchDetailMovie.rejected, (state, action) => {
+            .addCase(fetchDetailTV.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.payload.status_message
             })
@@ -54,4 +54,4 @@ const detailMovieSlice = createSlice({
     }
 })
 
-export default detailMovieSlice.reducer
+export default detailTVSlice.reducer

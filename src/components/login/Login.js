@@ -6,14 +6,14 @@ import { signInWithPopup } from 'firebase/auth'
 import { getUser } from '../../redux/userSlice';
 import { auth, provider } from '../../config/gmailCofig'
 import { Box, Typography } from '@mui/material'
-import {  FacebookAuthProvider } from "firebase/auth";
+import { FacebookAuthProvider } from "firebase/auth";
 import { authenticate } from '../../config/gmailCofig'
 
 
 const Login = () => {
     const [value, setValue] = useState('')
     const dispatch = useDispatch()
-    const { user } = useSelector((state) => state.user)
+    // const { user } = useSelector((state) => state.user)
     const navigate = useNavigate()
 
     const onButtonClick = () => {
@@ -31,8 +31,12 @@ const Login = () => {
         });
     }
 
-    
-    
+    const onButtonClickHome = () => {
+        navigate('./movie')
+    }
+
+
+
 
     return (
         <div className={'mainContainer'}>
@@ -62,7 +66,10 @@ const Login = () => {
                     {/* <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Log in'} /> */}
                     <button class="button-85" role="button" onClick={onButtonClick}>Login with gmail</button>
                 </div>
-                
+                <div className={'inputContainer'}>
+                    <button class="button-85" role="button" onClick={onButtonClickHome}>Watch Movie</button>
+                </div>
+
             </div>
         </div>
     )

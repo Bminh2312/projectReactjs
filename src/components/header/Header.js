@@ -60,7 +60,7 @@ export default function Header(props) {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [user]);
+    }, );
 
     return (
         <AppBar position="relative" sx={{ backgroundColor: "black", width: '100%' }}>

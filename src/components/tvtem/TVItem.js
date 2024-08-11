@@ -26,9 +26,7 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: "30%",
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
 };
 
 export default function TVItem(props) {
@@ -142,10 +140,12 @@ export default function TVItem(props) {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={style}>
-                        <Typography id="modal-modal-description" sx={{ mt: 2, width: '100%', textAlign: 'center' }}>
+                        <Typography variant='h3' id="modal-modal-description" sx={{ backgroundColor:'#e4d804', mb:5 , width: '100%', textAlign: 'center' }}>
                             Login with gmail
                         </Typography>
-                        <SignInGG setOpen={setOpen} />
+                        <Box >
+                            <SignInGG setOpen={setOpen} />
+                        </Box>
                     </Box>
                 </Modal>
             </div>

@@ -24,9 +24,8 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: "30%",
     bgcolor: 'background.paper',
-    border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
+    
 };
 
 export default function MovieItems(props) {
@@ -42,7 +41,7 @@ export default function MovieItems(props) {
 
     const { item, key, path } = props;
     const imgSrc = path + '/' + item.backdrop_path;
-    
+
 
     const date = item.release_date;
     const year = date.split('-')[0];
@@ -67,19 +66,19 @@ export default function MovieItems(props) {
         const isFavorite = favoriteItems.some(item => item.title === title && item.img === src);
         if (isFavorite) {
 
-            dispatch(removeMovie({ title: title, img: src, id: id}));
+            dispatch(removeMovie({ title: title, img: src, id: id }));
         } else {
             dispatch(addMovie({ title: title, img: src, id: id }));
-            
+
         }
-        
+
         // localStorage.setItem(JSON.stringify('favorite', favoriteItems))
         setLove(!love);
     };
 
-    useEffect(()=>{
-        dispatch(getMovie()) 
-    },[])
+    useEffect(() => {
+        dispatch(getMovie())
+    }, [])
 
     return (
         <>
@@ -96,7 +95,7 @@ export default function MovieItems(props) {
                         <Typography gutterBottom variant="h6" component="div" sx={{ color: '#ffc048', marginBottom: '10px' }}>
                             <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-evenly', whiteSpace: 'normal' }}>
                                 <p style={{ width: '70%', fontSize: "90%", textAlign: 'start' }}>{item.title}</p>
-                                {year&& <p style={{ width: '30%', textAlign: 'end' }}>{year}</p>}
+                                {year && <p style={{ width: '30%', textAlign: 'end' }}>{year}</p>}
                             </Box>
                         </Typography>
                         <Typography variant="h6" color="text.secondary" sx={{ color: '#ffc048' }}>
@@ -138,10 +137,12 @@ export default function MovieItems(props) {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={style}>
-                        <Typography id="modal-modal-description" sx={{ mt: 2, width: '100%', textAlign: 'center' }}>
+                        <Typography variant='h3' id="modal-modal-description" sx={{ backgroundColor:'#e4d804', mb:5 , width: '100%', textAlign: 'center' }}>
                             Login with gmail
                         </Typography>
-                        <SignInGG setOpen={setOpen} />
+                        <Box >
+                            <SignInGG setOpen={setOpen} />
+                        </Box>
                     </Box>
                 </Modal>
             </div>
