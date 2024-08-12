@@ -49,7 +49,7 @@ export default function AccountMenu() {
   }, [])
   return (
     <React.Fragment>
-      {user == null ? <SignInGG/>
+      {!user ? <SignInGG/>
       :
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account settings">
@@ -62,7 +62,7 @@ export default function AccountMenu() {
             aria-expanded={open ? 'true' : undefined}
           >
             
-            <Avatar sx={{ width: 32, height: 32 }} src={user != null ? `${user.img}` : <Avatar />} />
+            <Avatar sx={{ width: 32, height: 32 }} src={ `${user.img}` } />
           </IconButton>
         </Tooltip>
       </Box>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import '../login/login.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInWithPopup } from 'firebase/auth'
-import { getUser } from '../../redux/userSlice';
+import { getUser, setUser } from '../../redux/userSlice';
 import { auth, provider } from '../../config/gmailCofig'
 import { Box, Typography } from '@mui/material'
 import { FacebookAuthProvider } from "firebase/auth";
@@ -11,16 +11,14 @@ import { authenticate } from '../../config/gmailCofig'
 
 
 const Login = () => {
-    const [value, setValue] = useState('')
     const dispatch = useDispatch()
     // const { user } = useSelector((state) => state.user)
     const navigate = useNavigate()
 
     const onButtonClick = () => {
         signInWithPopup(auth, provider).then((data) => {
-            setValue(data.user.email)
-            localStorage.setItem("user", JSON.stringify(data.user))
-            dispatch(getUser(data.user))
+            
+            dispatch(setUser({ email: data.user.email, name: data.user.displayName, img: data.user.photoURL }));
             if (data.user.email !== undefined) {
                 navigate('/movie')
             }
