@@ -13,7 +13,7 @@ export default function MovieDetailPage() {
     const [flag, setFlag] = useState(true)
     return (
         <Container maxWidth="xxl" sx={{ background: '#1e272e', paddingLeft: '0 !important', paddingRight: '0 !important' }}>
-            <Header flag={flag} setFlag={setFlag} />
+            <Header flag={flag} setFlag={setFlag}/>
             <Main children={[<DetailMovie movie_id={movie_id}/>,<ReviewMovies movie_id={movie_id}/>]}/>
             <Footer />
         </Container>
