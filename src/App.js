@@ -21,6 +21,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/projectReactjs/' element={<LoginPage />} />
+        <Route path='/' element={<LoginPage />} />
         <Route path='/movie' element={<MoviePage />} />
         <Route path='/projectReactjs/movie' element={<MoviePage />} />
         <Route path='/tvseries' element={<TVSeriesPage />} />
