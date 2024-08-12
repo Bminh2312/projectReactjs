@@ -20,7 +20,7 @@ export default function Header(props) {
     const { user } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const [activePage, setActivePage] = React.useState('');
-    const { flag } = props;
+    const { flag, searchInput } = props;
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [search, setSearch] = React.useState('');
@@ -96,10 +96,10 @@ export default function Header(props) {
                         <NavMenu item={"Genres"} />
                         <NavMenu item={"Favorite"} />
                     </Box>
-                    <Search search={search} /> {/* Truyền giá trị search từ URL */}
+                    {searchInput==false?<Search search={search} />:<></>} {/* Truyền giá trị search từ URL */}
                     <AccountMenu />
                 </Toolbar>
-                {flag ? <></> : (
+                {flag == true ? <></> : (
                     <Paper elevation={0} square sx={{ color: 'white', position: 'absolute', width: '30%', background: 'none', top: '40%', left: '10%', fontFamily: "Poppins" }}>
                         <h6 style={{ color: '#e4d804', fontSize: '170%' }}>Movflx</h6>
                         <h2 style={{ fontSize: '220%', marginBottom: '30px' }}>Unlimited <span style={{ color: '#e4d804', fontSize: '220%' }}>Movie</span>, TVs Shows, & More.</h2>

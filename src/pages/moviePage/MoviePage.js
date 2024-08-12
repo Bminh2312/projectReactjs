@@ -11,9 +11,10 @@ import MoviePopular from '../../components/movies/MoviePopular'
 
 export default function MoviePage() {
   const [flag, setFlag] = useState(false)
+  const [searchInput, setSearchInput] = useState(false)
   return (
     <Container maxWidth='xxl' sx={{ background: '#1e272e', paddingLeft: '0 !important', paddingRight: '0 !important' }}>
-      <Header flag={flag} setFlag={setFlag} />
+      <Header flag={flag} setFlag={setFlag} searchInput={searchInput} />
       <Main children={[<MovieNowPlay />,<MoviePopular/> ,<MovieUpComing />]} />
       <Footer />
     </Container>

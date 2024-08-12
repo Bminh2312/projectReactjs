@@ -9,10 +9,11 @@ import TVPopular from '../../components/TV/TVPopular'
 
 export default function TVSeriesPage() {
     const [flag, setFlag] = useState(false)
+    const [searchInput, setSearchInput] = useState(false)
     
   return (
     <Container maxWidth='xxl' sx={{ background: '#1e272e', paddingLeft: '0 !important', paddingRight: '0 !important' }}>
-      <Header flag={flag} setFlag={setFlag} />
+      <Header flag={flag} setFlag={setFlag} searchInput={searchInput} />
       <Main children={[<TVAiringToday type='Airing Today'/>,<TVPopular type='Popular'/>,<TVOnTheAir type='On The Air'/>]} />
       <Footer />
     </Container>
