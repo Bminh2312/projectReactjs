@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import '../src/app.css';
 import MovieDetailPage from "./pages/movieDetailPage/MovieDetailPage";
 import NotFoundPage from "./pages/notFoundPage/NotFoundPage";
