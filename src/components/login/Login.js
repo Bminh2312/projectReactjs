@@ -32,7 +32,7 @@ const Login = () => {
     }
 
     const onButtonClickHome = () => {
-        navigate('./movie')
+        navigate('/movie')
     }
 
 

@@ -20,7 +20,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<LoginPage />} />
+        <Route path='/project-reactjs-kappa.vercel.app/' element={<LoginPage />} />
+        <Route path='/projectReactjs/' element={<LoginPage />} />
         <Route path='/movie' element={<MoviePage />} />
         <Route path='/tvseries' element={<TVSeriesPage />} />
         <Route path='/favorite' element={<FavoritePage />} />
