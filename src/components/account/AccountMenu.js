@@ -33,6 +33,7 @@ export default function AccountMenu() {
   const option = (text) => {
     if (text.toLowerCase() === 'logout' && text.length > 0) {
       dispatch(removeUser())
+      navigate('/')
       handleClose(null);
     }
   }
