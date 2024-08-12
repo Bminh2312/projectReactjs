@@ -22,7 +22,7 @@ const Login = () => {
             localStorage.setItem("user", JSON.stringify(data.user))
             dispatch(getUser(data.user))
             if (data.user.email !== undefined) {
-                navigate('./movie')
+                navigate('/movie')
             }
         }).catch((error) => {
             // Clear the popup reference on error
