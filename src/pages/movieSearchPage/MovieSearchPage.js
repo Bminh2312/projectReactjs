@@ -12,7 +12,7 @@ export default function MovieSearchPage() {
     const [searchInput, setSearchInput] = useState(true)
     return (
         <Container maxWidth="xxl" sx={{ background: '#1e272e', paddingLeft: '0 !important', paddingRight: '0 !important' }}>
-            <Header flag={flag} setFlag={setFlag} setSearchInput={searchInput}/>
+            <Header flag={flag} setFlag={setFlag} searchInput={searchInput}/>
             <Main children={<MovieSearch name={name}/>}/>
             <Footer />
         </Container>

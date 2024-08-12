@@ -96,7 +96,7 @@ export default function Header(props) {
                         <NavMenu item={"Genres"} />
                         <NavMenu item={"Favorite"} />
                     </Box>
-                    {searchInput?<Search search={search} />:<Search search={search}/>} {/* Truyền giá trị search từ URL */}
+                    {searchInput?<Search search={search} />:<></>} {/* Truyền giá trị search từ URL */}
                     <AccountMenu />
                 </Toolbar>
                 {flag == true ? <></> : (
