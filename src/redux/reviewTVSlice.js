@@ -10,10 +10,10 @@ const initialState = {
 }
 
 const token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZWVmNGI2YjNiNGZlMjRhZDk0OTkyYWQzNDhiMTA1NiIsIm5iZiI6MTcyMjU2NjMyNS4yMzc5MTIsInN1YiI6IjY2YWIyZGNmYzFhZmMwZmE4N2MwMDZjNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.R75_Aiz4ZtY81MT49o0RZ8WOpY4Ous1f3rBWbvulRB0"
-const url = 'https://api.themoviedb.org/3/movie'
+const url = 'https://api.themoviedb.org/3/tv'
 
 
-export const fetchReviewMovies = createAsyncThunk('movies/fetchReviewMovies', async ({id,page}) => {
+export const fetchReviewTV = createAsyncThunk('reviewTV/fetchReviewTV', async ({id,page}) => {
     const urlUpComing = url + `/${id}/reviews?language=en-US&page=${page}`
     try {
         const response = await axios.get(urlUpComing, {
@@ -31,27 +31,26 @@ export const fetchReviewMovies = createAsyncThunk('movies/fetchReviewMovies', as
 
 
 
-const reviewMoviesSlice = createSlice({
-    name: 'reviewMovies',
+const reviewTVSlice = createSlice({
+    name: 'reviewTV',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchReviewMovies.pending, (state) => {
+            .addCase(fetchReviewTV.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(fetchReviewMovies.fulfilled, (state, action) => {
+            .addCase(fetchReviewTV.fulfilled, (state, action) => {
                 state.status = 'succeeded'
                 state.items = action.payload.results
                 state.total = action.payload.total_pages
-                // localStorage.setItem('feedback',JSON.stringify(state.items))
                 state.status = 'start'
             })
-            .addCase(fetchReviewMovies.rejected, (state, action) => {
+            .addCase(fetchReviewTV.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.payload.status_message
             })
     }
 })
 
-export default reviewMoviesSlice.reducer
+export default reviewTVSlice.reducer

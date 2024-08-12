@@ -87,12 +87,14 @@ export default function FavoriteMovie() {
 
     const handle_navTV = (id) => {
         if (user !== undefined && user !== null) {
-            let movieLink = `/movieDetailPage/${id}`;
-            navigate(movieLink);
+            let tvLink = `/TVDetailPage/${id}`;
+            navigate(tvLink);
         } else {
             handleOpen();
         }
     }
+
+    
     useEffect(() => {
         dispatch(getMovie())
         dispatch(getTV()) 

@@ -7,6 +7,7 @@ import { fetchMoviesUpComing } from '../../redux/movieUpComingSlice'
 import Pagination from '../paging/Paging'
 import Loading from '../loading/Loading'
 import Paging from '../paging/Paging'
+import Aos from 'aos'
 
 
 export default function Movie() {
@@ -28,6 +29,14 @@ export default function Movie() {
         }
 
     }, [page])
+
+    useEffect(()=>{
+        Aos.init({
+            duration:1000,
+        })
+    },[])
+
+
 
     if (status === 'loading') {
         return <Loading />
@@ -53,7 +62,7 @@ export default function Movie() {
                     sx={{ color: "#fff" }}
                 >Upcoming Movies</Typography>
             </Box>
-            <Grid sx={{ marginTop: "10px" }} container rowSpacing={2} columnSpacing={{ sm: 2, md: 2, xl: 0, lg: 1 }}>
+            <Grid sx={{ marginTop: "10px" }} container rowSpacing={2} columnSpacing={{ sm: 2, md: 2, xl: 0, lg: 1 }}  data-aos="fade-up">
                 {items && items.results && items.results.slice(0, rowsToShow * 4).map((item, index) => (
                     <MovieItems item={item} key={index} path={path} />
                 ))}

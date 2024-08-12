@@ -5,6 +5,7 @@ import Paging from '../paging/Paging';
 import Loading from '../loading/Loading';
 import { fetchMoviesPopular } from '../../redux/popularMovieSlice';
 import MovieItems from '../movieItem/MovieItems';
+import Aos from 'aos'
 
 export default function MoviePopular() {
     const [page, setPage] = useState(1);
@@ -23,6 +24,12 @@ export default function MoviePopular() {
         }
 
     }, [page])
+
+    useEffect(()=>{
+        Aos.init({
+            duration:1000,
+        })
+    },[])
 
     if (status === 'loading') {
         return <Loading />
@@ -47,7 +54,7 @@ export default function MoviePopular() {
                     sx={{ color: "#fff" }}
                 >Popular Movies</Typography>
             </Box>
-            <Grid sx={{ marginTop: "10px" }} container rowSpacing={2} columnSpacing={{ sm: 2, md: 2, xl: 0, lg: 1 }}>
+            <Grid sx={{ marginTop: "10px" }} container rowSpacing={2} columnSpacing={{ sm: 2, md: 2, xl: 0, lg: 1 }}  data-aos="fade-up">
                 {items && items.results && items.results.slice(0, rowsToShow * 4).map((item, index) => (
                     <MovieItems item={item} key={index} path={path} />
                 ))}

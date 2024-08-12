@@ -5,6 +5,7 @@ import { Box, Button, Grid, Pagination, Typography } from '@mui/material'
 import MovieItems from '../movieItem/MovieItems';
 import Loading from '../loading/Loading';
 import Paging from '../paging/Paging';
+import Aos from 'aos'
 
 export default function MovieNowPlay() {
     const [page, setPage] = useState(1);
@@ -26,11 +27,18 @@ export default function MovieNowPlay() {
 
     }, [page])
 
+    useEffect(()=>{
+        Aos.init({
+            duration:1000,
+        })
+    },[])
+
     if (status === 'loading') {
         return <Loading />
 
 
     }
+
 
 
 
@@ -49,7 +57,7 @@ export default function MovieNowPlay() {
                     sx={{ color: "#fff" }}
                 >Now play Movies</Typography>
             </Box>
-            <Grid container sx={{ marginTop: "10px", textAlign: 'center', justifyContent: 'center', alignItems: 'center' }} rowSpacing={2} >
+            <Grid container sx={{ marginTop: "10px", textAlign: 'center', justifyContent: 'center', alignItems: 'center' }} rowSpacing={2} data-aos="fade-up" >
                 {items && items.results && items.results.slice(0, rowsToShow * 4).map((item, index) => (
                     <MovieItems item={item} key={index} path={path} />
                 ))}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Paper, Box, Typography, Grid, TextField, Avatar, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, setUser } from '../../redux/userSlice';
+import Aos from 'aos'
 
 export default function Profile() {
     const { user } = useSelector((state) => state.user);
@@ -20,9 +21,13 @@ export default function Profile() {
     React.useEffect(() => {
         dispatch(getUser())
       }, [])
-
+      React.useEffect(()=>{
+        Aos.init({
+            duration:1000,
+        })
+    },[])
     return (
-        <Paper elevation={3} sx={{ padding: 3, maxWidth: 600, margin: '0 auto' }}>
+        <Paper elevation={3} sx={{ padding: 3, maxWidth: 600, margin: '0 auto' }} data-aos="fade-up">
             <Box textAlign='center' mb={2}>
                 <Typography variant='h3' sx={{ fontStyle: 'italic' }}>Profile</Typography>
             </Box>

@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import Loading from '../loading/Loading';
-import Video from '../video/Video';
 import { fetchDetailTV } from '../../redux/tvDetailSlice';
+import VideoTV from '../video/VideoTv';
 
 
 
@@ -38,7 +38,7 @@ export default function DetailTV(props) {
                         <Grid container spacing={2}>
                             <Grid item xl={12}>
                                 <Typography variant='h3' sx={{ display: "inline-block"}}>
-                                    {item.title}:
+                                    {item.name}:
                                 </Typography>
                             
                                 <Typography variant='h3' sx={{ display: "inline-block",  }} >
@@ -46,22 +46,22 @@ export default function DetailTV(props) {
                                 </Typography>
                             </Grid>
                             <Grid item xl={12}>
-                                <Typography variant='h5' sx={{ display: "inline-block" }}>Type: </Typography>
-                                {item.genres && item.genres.map((type) => (
+                                <Typography variant='h5' sx={{ display: "inline-block" }}>Season: </Typography>
+                                {item.seasons && item.seasons.map((type) => (
                                     <Typography variant='h6' sx={{ display: "inline-block",  marginLeft: '5px' }}>{type.name},</Typography>
                                 ))}
 
                             </Grid>
-                            <Grid item xl={12}>
+                            {/* <Grid item xl={12}>
                                 <Typography variant='h6' >
                                     <i class="fa-regular fa-clock"></i> {item.runtime} mins
                                 </Typography>
-                            </Grid>
-                            <Grid item xl={12}>
+                            </Grid> */}
+                            {/* <Grid item xl={12}>
                                 <Typography variant='h6' width={'70%'} >
                                     Description: {item.overview}
                                 </Typography>
-                            </Grid>
+                            </Grid> */}
                             <Grid item xl={12}>
                                 <Typography variant='h6' width={'70%'} >
                                     Vote: {item.vote_average}
@@ -72,17 +72,17 @@ export default function DetailTV(props) {
                 </Grid>
             }
             <Box sx={{ border: '2px solid black', width: '100%', mt: 5, mb: 5, boxShadow: '0px 3px 0px 0px rgba(143, 143, 143, 0.14)' }}></Box>
-            <Box>
+            {/* <Box>
                 <Typography variant='h3' sx={{ m:10, color:'#e4d804' }} >
                     Trailer:
                 </Typography>
             </Box>
-            <Video movie_id={tv_id}></Video>
-            <Box>
+            <VideoTV tv_id={tv_id}></VideoTV> */}
+            {/* <Box>
                 <Typography variant='h3' sx={{ m:10, color:'#e4d804' }} >
                     Reviewer:
                 </Typography>
-            </Box>
+            </Box> */}
 
 
         </Container>
