@@ -108,7 +108,8 @@ export default function FavoriteMovie() {
                     <Tab sx={{ margin: '0 auto', padding: '5px' }}>
                         <Typography variant="h6">Movie</Typography>
                     </Tab>
-                    <Tab sx={{ margin: '0 auto', padding: '5px' }}>
+                    <Box sx={{marginLeft:'20px',marginRight:'20px'}}>|</Box>
+                    <Tab sx={{ margin: '0 auto', padding: '5px',  }}>
                         <Typography variant="h6">TV Series</Typography>
                     </Tab>
                 </CustomTabList>
