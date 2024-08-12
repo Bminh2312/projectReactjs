@@ -47,7 +47,7 @@ export default function TVItem(props) {
     const date = item.first_air_date;
     const year = date.split('-')[0];
 
-    const movieLink = `/tv/${item.id}`;
+    const movieLink = `/TVDetailPage/${item.id}`;
 
     // Check if the item is in the favorite list
     useEffect(() => {
