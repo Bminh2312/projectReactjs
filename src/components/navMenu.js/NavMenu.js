@@ -37,7 +37,9 @@ export default function NavMenu(props) {
     const handleActive = (event, page) => {
         if (page === 'Movie') {
             navigate('/movie');
-        } else if (page === 'Genres') {
+        } else if (page === 'Genres Movie') {
+            handleOpenGenresMenu(event); 
+        }else if (page === 'Genres TV') {
             handleOpenGenresMenu(event); 
         } else {
             const pagePath = `/${page.toLowerCase().replace(' ', '')}`;
@@ -46,9 +48,15 @@ export default function NavMenu(props) {
     };
 
     // Handle genre selection
-    const handleSelectGenre = (genre) => {
-        const genrePath = genre.toLowerCase();
-        navigate(`/genres/${genrePath}`);
+    const handleSelectGenreMovie = (id,name) => {
+        const genrePath = name.toLowerCase();
+        navigate(`/genresmovie/${genrePath}/${id}`);
+        handleCloseGenresMenu();
+    };
+
+    const handleSelectGenreTV = (id) => {
+        const genrePath = id;
+        navigate(`/genrestv/${genrePath}`);
         handleCloseGenresMenu();
     };
 
@@ -85,7 +93,7 @@ export default function NavMenu(props) {
             >
                 {item}
             </StyledButton>
-            {item === 'Genres' && (
+            {item === 'Genres Movie' && (
                 <Menu
                     anchorEl={anchorElGenres}
                     anchorOrigin={{
@@ -108,7 +116,41 @@ export default function NavMenu(props) {
                 >
                     {items.length > 0 ? (
                         items.map((genre) => (
-                            <MenuItem key={genre.id} onClick={() => handleSelectGenre(genre.name)}>
+                            <MenuItem key={genre.id} onClick={() => handleSelectGenreMovie(genre.id,genre.name)}>
+                                <Typography textAlign="center">{genre.name}</Typography>
+                            </MenuItem>
+                        ))
+                    ) : (
+                        <MenuItem disabled>
+                            <Typography textAlign="center">No genres available</Typography>
+                        </MenuItem>
+                    )}
+                </Menu>
+            )}
+            {item === 'Genres TV' && (
+                <Menu
+                    anchorEl={anchorElGenres}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                    open={Boolean(anchorElGenres)}
+                    onClose={handleCloseGenresMenu}
+                    PaperProps={{
+                        style: {
+                          maxHeight: 48 * 4.5,
+                          width: '20ch',
+                        },
+                    }}
+                >
+                    {items.length > 0 ? (
+                        items.map((genre) => (
+                            <MenuItem key={genre.id} onClick={() => handleSelectGenreTV(genre.id,genre.name)}>
                                 <Typography textAlign="center">{genre.name}</Typography>
                             </MenuItem>
                         ))

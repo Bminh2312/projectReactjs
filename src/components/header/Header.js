@@ -12,7 +12,7 @@ import DrawerNav from '../draw/DrawerNav';
 import Search from '../search/SearchType';
 import { useLocation } from 'react-router-dom';
 
-const pages = ['Movie', 'TV Series', 'Genres', 'Favorite'];
+const pages = ['Movie', 'TV Series', 'Genres Movie', 'Genres TV', 'Favorite'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function Header(props) {
@@ -74,7 +74,7 @@ export default function Header(props) {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        href="#/movie"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -93,7 +93,8 @@ export default function Header(props) {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'end', alignItems: 'center' }}>
                         <NavMenu item={"Movie"} />
                         <NavMenu item={"TV Series"} />
-                        <NavMenu item={"Genres"} />
+                        <NavMenu item={"Genres Movie"} />
+                        <NavMenu item={"Genres TV"} />
                         <NavMenu item={"Favorite"} />
                     </Box>
                     {searchInput?<Search search={search} />:<></>} {/* Truyền giá trị search từ URL */}

@@ -28,7 +28,7 @@ function App() {
         <Route path='/favorite' element={<FavoritePage />} />
         <Route path='/movieDetailPage/:movie_id' element={<MovieDetailPage />} />
         <Route path='/tvDetailPage/:tv_id' element={<TVDetailPage />} />
-        <Route path='/genres/:genres_name' element={<MovieGenresPage />} />
+        <Route path='/genresmovie/:genresMovie/:movie_id' element={<MovieGenresPage />} />
         <Route path='/movie/:name' element={<MovieSearchPage />} />
         <Route path='/tvseries/:name' element={<TVSearchPage />} />
         <Route path='/profile' element={<ProfilePage />} />

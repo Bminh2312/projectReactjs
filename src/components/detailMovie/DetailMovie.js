@@ -80,12 +80,7 @@ export default function DetailMovie(props) {
                 </Typography>
             </Box>
             <Video movie_id={movie_id}></Video>
-            <Box>
-                <Typography variant='h3' sx={{ m:10, color:'#e4d804' }} >
-                    Reviewer:
-                </Typography>
-            </Box>
-
+            
 
         </Container>
     )

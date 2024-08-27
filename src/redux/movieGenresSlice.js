@@ -15,8 +15,8 @@ const url = 'https://api.themoviedb.org/3/discover/movie'
 
 
 
-export const fetchGenresMovie = createAsyncThunk('genresMovies/fetchGenresMovie', async ({page,genres}) => {
-    const urlGenresMovie = url + `?page=${page}&without_genres=${genres}`
+export const fetchGenresMovie = createAsyncThunk('genresMovies/fetchGenresMovie', async ({page,genres,year}) => {
+    const urlGenresMovie = url + `?page=${page}&with_genres=${genres}&year=${year}`
     console.log(urlGenresMovie)
     try {
         const response = await axios.get(urlGenresMovie, {
