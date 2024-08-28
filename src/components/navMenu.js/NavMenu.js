@@ -54,9 +54,9 @@ export default function NavMenu(props) {
         handleCloseGenresMenu();
     };
 
-    const handleSelectGenreTV = (id) => {
-        const genrePath = id;
-        navigate(`/genrestv/${genrePath}`);
+    const handleSelectGenreTV = (id,name) => {
+        const genrePath = name.toLowerCase();
+        navigate(`/genrestv/${genrePath}/${id}`);
         handleCloseGenresMenu();
     };
 

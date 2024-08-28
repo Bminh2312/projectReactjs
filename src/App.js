@@ -7,12 +7,12 @@ import MovieSearchPage from './pages/movieSearchPage/MovieSearchPage';
 import MoviePage from './pages/moviePage/MoviePage';
 import MovieGenresPage from './pages/movieGenresPage/MovieGenresPage';
 import TVSeriesPage from './pages/tvPage/TVSeriesPage';
-import HomePage from './pages/home/HomePage';
 import FavoritePage from './pages/favoritePage/FavoritePage';
 import TVSearchPage from './pages/tvPage/TVSearchPage';
 import LoginPage from './pages/loginPage/LoginPage';
 import ProfilePage from './pages/profilePage/ProfilePage';
 import TVDetailPage from './pages/tvDetail/TVDetailPage';
+import TvGenresPage from './pages/TvGenresPage';
 
 
 
@@ -29,6 +29,7 @@ function App() {
         <Route path='/movieDetailPage/:movie_id' element={<MovieDetailPage />} />
         <Route path='/tvDetailPage/:tv_id' element={<TVDetailPage />} />
         <Route path='/genresmovie/:genresMovie/:movie_id' element={<MovieGenresPage />} />
+        <Route path='/genrestv/:genrestv/:tv_id' element={<TvGenresPage />} />
         <Route path='/movie/:name' element={<MovieSearchPage />} />
         <Route path='/tvseries/:name' element={<TVSearchPage />} />
         <Route path='/profile' element={<ProfilePage />} />

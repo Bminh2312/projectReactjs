@@ -5,13 +5,15 @@ import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, Typograph
 import Paging from '../paging/Paging';
 import Loading from '../loading/Loading';
 import MovieItems from '../movieItem/MovieItems';
+import { fetchGenresTv } from '../../redux/TvGenresSlice';
+import TVItem from '../tvtem/TVItem';
 
-export default function MoviesGenres(props) {
-    const { genresMovie,movie_id,genrestv,tv_id } = props
+export default function TVGenres(props) {
+    const {genrestv,tv_id } = props
     const years = [2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024]
     const [page, setPage] = useState(1);
     const [rowsToShow, setRowsToShow] = useState(2);
-    const { items, total, status, path } = useSelector(state => state.genresMovies)
+    const { items, total, status, path } = useSelector(state => state.genresTv)
     const [year, setYear] = React.useState(2024);
     
 
@@ -27,10 +29,10 @@ export default function MoviesGenres(props) {
 
     useEffect(() => {
         if (status === 'start') {
-            dispatch(fetchGenresMovie({ page: page, genres: movie_id, year: year }));
+            dispatch(fetchGenresTv({ page: page, genres: tv_id, year: year }));
             setRowsToShow(2)
         }
-    }, [page,year,movie_id])
+    }, [page,year,tv_id])
 
     if (status === 'loading') {
         return <Loading />
@@ -55,7 +57,7 @@ export default function MoviesGenres(props) {
 
                     sx={{ color: "#fff" }}
                 >
-                    {genresMovie}
+                    {genrestv}
                 </Typography>
             </Box>
             <Box sx={{ mt: 5, mb: 5, textAlign: 'start' }}>
@@ -73,9 +75,9 @@ export default function MoviesGenres(props) {
                     </Select>
                 </FormControl>
             </Box>
-            <Grid container sx={{ marginTop: "10px", textAlign: 'center', justifyContent: 'center', alignItems: 'center' }} rowSpacing={2} >
+            <Grid sx={{ marginTop: "10px" }} container rowSpacing={2} columnSpacing={{ sm: 2, md: 2, xl: 0, lg: 1 }}>
                 {items && items.results && items.results.slice(0, rowsToShow * 4).map((item, index) => (
-                    <MovieItems item={item} key={index} path={path} />
+                    <TVItem item={item} key={index} path={path} />
                 ))}
             </Grid>
             {rowsToShow * 4 < (items && items.results && items.results.length) && (
@@ -93,6 +95,7 @@ export default function MoviesGenres(props) {
                     }} onClick={handleLoadMore}>Load More</Button>
                 </Box>
             )}
+
             {total === 0 ? <></> : <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', margin: '10px' }}>
                 <Paging total={total} page={page} setPage={setPage} />
             </Box>
